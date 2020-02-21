@@ -39,6 +39,7 @@ public:
     // operator++ is a good idea.
     return *this;
   }
+  //define destrutor and copy
 
 private:
   int _pos;
@@ -53,88 +54,33 @@ class vector
   int current_size;       // size of this myvec
 
   public:
-  vector(int size) // constructor
-  {
-    //check if invalid size
-    if (size < 0)
-    {
-      throw std::invalid_argument(" cannot set out of bounds.");
-    }
-    current_size = size;
-    arr = new double[current_size];
-    //arr is empty, remember to check
-  }
 
-  int size() const 
-  {
-    return current_size;
-  }
+    vector(int size); // constructor
 
-  /*
-    @Pre Assingment Operator T must be defined
+    int size() const;
 
-  */
-  void set(int i, T val)
-  {
-    if (i < 0 || i >= current_size)
-    {
-      throw std::range_error(" cannot set out of bounds.");
-    }
-    arr[i] = val;
-  }
+    /*!
+      @Pre Assignment Operator T must be defined
 
-  T get(int i) const
-  {
-    if (i < 0 || i >= current_size)
-    {
-      throw std::range_error(" cannot set out of bounds.");
-    }
-    return arr[i];
-  }
+    */
+    void set(int i, T val);
 
+   /*!
+      @Pre Assignment Operator T must be defined
 
-  ~vector() 
-  {       // destructor
-    delete[] arr;
-  } 
+    */
+    T get(int i) const;
 
-  void resize(const int new_size)
-  {
-    //do nothing is same size
-    if (new_size != current_size)
-    {
-      if (new_size < 1)
-      {
-        throw std::bad_alloc("cannot set size given");
-      }
-      T* new_arr = new T[new_size];   // allocate a new array on the free store
+    ~vector();
 
-      int difference = new_size - current_size;
+    void resize(const int new_size);
 
-      //new size can be lower or higher
-      difference = new_size - current_size;
-      std::copy(current_size, current_size + difference, new_arr.begin());
+    Iter<T> begin() const;
 
-      delete[] arr;                       // delete the old vector
-      arr = new_arr;
-    }
+    Iter<T> end() const;
 
- }
-
-  Iter<T> begin() const
-  {
-    return Iter<T>(this, 0);
-  }
-
-  Iter<T> end() const
-  {
-    return Iter<T>(this, current_size);
-  }
-
-  template<typename U>
-  friend ostream& operator << (ostream& os, const vector<U>& Obj);
-
-
+    template<typename U>
+    friend ostream& operator << (ostream& os, const vector<U>& Obj);
 };
 
 template<typename T>

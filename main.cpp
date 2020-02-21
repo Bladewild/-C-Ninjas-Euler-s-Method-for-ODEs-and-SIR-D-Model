@@ -11,7 +11,11 @@
 
 using std::cout;
 using std::endl;
-
+//stuff tested
+/*
+for range
+//sets
+*/
 int main()
 {
   vector<int> hello(5);
