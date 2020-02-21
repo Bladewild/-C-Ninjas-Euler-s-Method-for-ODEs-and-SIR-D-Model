@@ -22,8 +22,7 @@ public:
 
   // these three methods form the basis of an iterator for use with
   // a range-based for loop
-  bool
-    operator!= (const Iter& other) const
+  bool operator!= (const Iter& other) const
   {
     return _pos != other._pos;
   }

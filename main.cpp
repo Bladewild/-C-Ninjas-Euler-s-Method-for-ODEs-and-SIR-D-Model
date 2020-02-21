@@ -19,6 +19,7 @@ int main()
   hello.set(1, 1);
   hello.set(2, 2);
   hello.set(3, 3);
-  //cout << hello << endl;
+  hello.set(4, 4);
+  cout << hello << endl;
   return 0;
 }
