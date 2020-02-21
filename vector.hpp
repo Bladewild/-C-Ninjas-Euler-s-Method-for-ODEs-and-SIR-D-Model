@@ -1,23 +1,54 @@
-
 #pragma region Constructors
 
 template <typename T>
+vector<T>::vector() // constructor
+{
+  init(0);
+}
+template <typename T>
 vector<T>::vector(int size) // constructor
 {
-  //check if invalid size
-  if (size < 0)
-  {
-    throw std::invalid_argument(" cannot set out of bounds.");
-  }
-  current_size = size;
-  arr = new double[current_size];
-  //arr is empty, remember to check
+  init(size);
 }
+
+template<typename T>
+vector<T>::vector(std::initializer_list<T> init_list) 
+{
+  int index = 0;
+  init(init_list.size());
+  for (auto& element : init_list)
+  {
+    arr[index] = element;
+    index++;
+  }
+  cout << "constructed with a " << current_size << "-element list\n";
+}
+
+template<typename T>
+void vector<T>::init(int input_size)
+{
+
+  if (input_size < 0)
+  {
+    throw std::invalid_argument(" cannot be to a negative number.");
+  }
+  current_size = input_size;
+  arr = new T[current_size];
+  //arr is empty, remember to check
+
+}
+
 
 template <typename T>
 int vector<T>::size() const
 {
   return current_size;
+}
+
+template <typename T>
+bool vector<T>::empty() const
+{
+  return (current_size<=0) ? true : false;
 }
 template <typename T>
 void vector<T>::resize(const int new_size)

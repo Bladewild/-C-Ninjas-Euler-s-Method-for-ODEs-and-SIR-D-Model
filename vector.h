@@ -3,10 +3,11 @@
 
 
 #include <iostream>
+#include <initializer_list>
 
 using std::string;
 using std::ostream;
-using std::string;
+using std::cout;
 
 template<typename T>
 class vector;
@@ -50,14 +51,18 @@ template<typename T>
 class vector
 {
   private:
-  double* arr; // pointer to the first element of the underlying array
+  T* arr; // pointer to the first element of the underlying array
   int current_size;       // size of this myvec
-
+  void init(int input_size);
   public:
 
+    vector(); // constructor
     vector(int size); // constructor
 
+    vector(std::initializer_list<T> l);
+
     int size() const;
+    bool empty() const;
 
     /*!
       @Pre Assignment Operator T must be defined
@@ -102,8 +107,8 @@ http://antonym.org/2014/02/c-plus-plus-11-range-based-for-loops.html
   copy constructor
   copy assignment operator
 
- A parameterized constructor accepting a 1-dimensional std::initializer_list
-A parameterized constructor accepting the size of the vector to create
+A parameterized constructor accepting a 1-dimensional std::initializer_list //done
+A parameterized constructor accepting the size of the vector to create //done
 Other appropriate constructors
 A means of resizing and determining the size of the vector with resize and size functions
 Appropriate functions such that range-based for loops can be used on your vector
