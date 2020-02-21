@@ -58,15 +58,11 @@ void vector<T>::resize(const int new_size)
   {
     if (new_size < 1)
     {
-      throw std::bad_alloc("cannot set size given");
+      throw std::invalid_argument("cannot set size given");
     }
     T* new_arr = new T[new_size];   // allocate a new array on the free store
-
-    int difference = new_size - current_size;
-
-    //new size can be lower or higher
-    difference = new_size - current_size;
-    std::copy(current_size, current_size + difference, new_arr.begin());
+    current_size = new_size;
+    std::copy(arr, arr + new_size, new_arr);
 
     delete[] arr;                       // delete the old vector
     arr = new_arr;

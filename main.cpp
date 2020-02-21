@@ -22,7 +22,23 @@ int main()
   
   InitialTest();
   Test2();
+  Test3();
+
   return 0;
+}
+void Test3()
+{
+  //tests 
+  /*
+  set
+  vector(int size)
+  operator <<
+  */
+  cout << "-------Test 3---" << endl;
+  vector<int> vTest = { 1,2,3,4,5,6,7 };
+  vTest.resize(5);
+  cout << vTest << endl;
+  cout << "------- END----" << endl;
 }
 
 void Test2()
