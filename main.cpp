@@ -1,8 +1,8 @@
 /*
-* Author: ALAIN MARKUS SANTOS-TANKIA
+* Author: 
 * File: main.cpp Date: 2/13/20
 * Class: CS 5201
-* Instructor : CLAYTON PRICE
+* Instructor : 
 *
 * main file
 */
