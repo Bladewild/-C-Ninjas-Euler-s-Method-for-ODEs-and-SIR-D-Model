@@ -40,7 +40,6 @@ public:
     // operator++ is a good idea.
     return *this;
   }
-  //define destrutor and copy
 
 private:
   int _pos;
@@ -58,6 +57,7 @@ public:
 
   vector(); // constructor
   vector(int size); // constructor
+  vector(const T * input_array, const int input_size); // constructor
   vector(const vector<T>& otherVector);
 
   vector(std::initializer_list<T> l);
@@ -115,9 +115,9 @@ copy assignment operator
 A parameterized constructor accepting a 1-dimensional std::initializer_list //done
 A parameterized constructor accepting the size of the vector to create //done
 Other appropriate constructors
-A means of resizing and determining the size of the vector with resize and size functions
-Appropriate functions such that range-based for loops can be used on your vector
-Copy constructor/copy assignment operations
+A means of resizing and determining the size of the vector with resize and size functions //done
+Appropriate functions such that range-based for loops can be used on your vector//in dev
+Copy constructor/copy assignment operations //done
 Element access with the [] operator
 Addition, subtraction, scalar multiplication, and vector multiplication (dot product)
 Unary minus
@@ -125,22 +125,4 @@ An apply function accepting a function and returning a new vector containing the
 Stream operators for input/output of vector data - accepted input should be whitespace-delimited elements, and output should be single-space-delimited elements of the vector
       */
 
-      /*
-      Since the state of a system of ODEs can be represented by a vector, you will first need to implement a templated vector class allowing the creation of vectors of floats, ints, Penguins, or any other class that a user desires. Your vector must have the following operations:
-
-      A parameterized constructor accepting a 1-dimensional std::initializer_list
-      A parameterized constructor accepting the size of the vector to create
-      Other appropriate constructors
-      A means of resizing and determining the size of the vector with resize and size functions
-      Appropriate functions such that range-based for loops can be used on your vectoraa
-      Copy constructor/copy assignment operations
-      Element access with the [] operator
-      Addition, subtraction, scalar multiplication, and vector multiplication (dot product)
-      Unary minus
-      An apply function accepting a function and returning a new vector containing the result of the function when called on the elements of the calling object, and in which the function f must have the signature T f(T) (for template type T)
-      Stream operators for input/output of vector data - accepted input should be whitespace-delimited elements, and output should be single-space-delimited elements of the vector
-      All vector arithmetic operations should return new vectors.
-
-      You should not use std::vector or std::valarray to create this class.
-      */
 #endif

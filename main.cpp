@@ -55,20 +55,25 @@ void Test4()
   //unary minus
   //copy constructor
   //set test
+  //array constructor
+  int test[] = { 5,1,2,3,4 };
   cout << "-------Test 4---" << endl;
   vector<int> vTest1 = { 1,2,3,4,5,6,7,8 };
   cout << vTest1 << endl;
   cout << "-------COPYING---" << endl;
   vector<int> vTest2 = vector<int>(vTest1);
+  vector<int> vTestarr(test,5);
   vTest2.set(0, 1);
   vTest2.set(1, 1);
   vTest2.set(2, 1);
   vTest2.set(3, 1);
   vTest2.set(4, 1);
-  vector<int> vTest3 = vTest2;
+  
+  vector<int> vTest3 = -vTest2;
   vTest3.set(0, 2);
   cout << "vTest1: " << vTest1 << endl;
   cout << "vTest2: " << vTest2 << endl;
+  cout << "vTestarr: " << vTestarr << endl;
   cout << "vTest3: " << vTest3 << endl;
   cout << "------- END----" << endl;
 }

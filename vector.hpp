@@ -11,6 +11,13 @@ vector<T>::vector(int size) // constructor
   init(size);
 }
 
+//array of refernce not allowed
+template <typename T>
+vector<T>::vector(const T * input_array,const int input_size) // constructor
+{
+  init(input_size);
+  std::copy(input_array, input_array + current_size, arr);
+}
 template<typename T>
 vector<T>::vector(std::initializer_list<T> init_list) 
 {
@@ -27,7 +34,6 @@ vector<T>::vector(std::initializer_list<T> init_list)
 template<typename T>
 vector<T>::vector(const vector<T> & otherVector)
 {
-
   cout << "Copy Constructor"<<std::endl;
   cout << "Size: " << otherVector.current_size<< std::endl;
   init(otherVector.current_size);
@@ -89,21 +95,19 @@ void vector<T>::resize(const int new_size)
 /*
   @ppre T must define - (unary operator)
 */
+
 template<typename T>
 vector<T> vector<T>::operator-() const
 {
-
-  vector<T> complementV = vector<int>(this);
+  //check if vector is empty;
   T* new_complementarr = new T[current_size];
 
-  int index = 0;
-  for (auto x : arr)
+  for (int i = 0; i < current_size; i++)
   {
-    new_complementarr[index] = -x;
-    index++;
+    new_complementarr[i] = -(arr[i]);
   }
 
-  return ComplexNumber(-(this->real), -(this->imaginary));
+  return vector(new_complementarr,current_size);
 }
 
 template<typename T>
