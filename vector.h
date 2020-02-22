@@ -77,6 +77,13 @@ public:
    */
   T get(int i) const;
 
+  vector<T> operator-() const;
+  template<typename U>
+  friend ostream& operator << (ostream& os, const vector<U>& Obj);
+
+  vector<T>& operator = (const vector<T>& source);
+
+
   ~vector();
 
   void resize(const int new_size);
@@ -84,9 +91,6 @@ public:
   Iter<T> begin() const;
 
   Iter<T> end() const;
-
-  template<typename U>
-  friend ostream& operator << (ostream& os, const vector<U>& Obj);
 };
 
 template<typename T>

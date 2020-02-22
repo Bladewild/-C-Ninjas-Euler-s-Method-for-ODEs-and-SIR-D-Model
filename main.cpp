@@ -65,8 +65,11 @@ void Test4()
   vTest2.set(2, 1);
   vTest2.set(3, 1);
   vTest2.set(4, 1);
+  vector<int> vTest3 = vTest2;
+  vTest3.set(0, 2);
   cout << "vTest1: " << vTest1 << endl;
   cout << "vTest2: " << vTest2 << endl;
+  cout << "vTest3: " << vTest3 << endl;
   cout << "------- END----" << endl;
 }
 void Test3()

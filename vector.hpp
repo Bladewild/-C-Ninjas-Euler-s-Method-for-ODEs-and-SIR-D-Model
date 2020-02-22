@@ -89,15 +89,33 @@ void vector<T>::resize(const int new_size)
 /*
   @ppre T must define - (unary operator)
 */
-//template<typename T>
-//vector<T> vector<T>::operator-() const
-//{
-//   vector<T> complementV =
+template<typename T>
+vector<T> vector<T>::operator-() const
+{
 
-//  delete[] arr;                       // delete the old vector
+  vector<T> complementV = vector<int>(this);
+  T* new_complementarr = new T[current_size];
 
-//  return ComplexNumber(-(this->real), -(this->imaginary));
-//}
+  int index = 0;
+  for (auto x : arr)
+  {
+    new_complementarr[index] = -x;
+    index++;
+  }
+
+  return ComplexNumber(-(this->real), -(this->imaginary));
+}
+
+template<typename T>
+vector<T>& vector<T>::operator = (const vector<T>& source)
+{
+  if (this != &source)
+  {
+    std::copy(source.arr, source.arr + source.current_size, arr);
+    current_size = source.current_size;
+  }
+  return *this;
+}
 
 template<typename T>
 vector<T>::~vector()
