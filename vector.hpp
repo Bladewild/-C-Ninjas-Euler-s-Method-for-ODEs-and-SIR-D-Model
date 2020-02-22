@@ -1,3 +1,4 @@
+#include "vector.h"
 #pragma region Constructors
 
 template <typename T>
@@ -139,6 +140,75 @@ ostream& operator << (ostream& os, const vector<T>& Obj)
   return os;
 }
 
+template<typename T>
+vector<T> operator+(const vector<T>& lhs, const vector<T>& rhs)
+{
+  char symbol = '+';
+  return vector<T>::operatorhandler(lhs, rhs, symbol);
+}
+template<typename T>
+vector<T> operator-(const vector<T>& lhs, const vector<T>& rhs)
+{
+  char symbol = '-';
+  return vector<T>::operatorhandler(lhs, rhs, symbol);
+}
+template<typename T>
+vector<T> operator/(const vector<T>& lhs, const vector<T>& rhs)
+{
+  char symbol = '/';
+  return vector<T>::operatorhandler(lhs, rhs, symbol);
+}
+template<typename T>
+vector<T> operator*(const vector<T>& lhs, const vector<T>& rhs)
+{
+  char symbol = '/';
+  return vector<T>::operatorhandler(lhs, rhs, symbol);
+}
+
+
+template<typename T>
+vector<T> vector<T>::operatorhandler(const vector<T>& lhs,
+  const vector<T>& rhs, char& symbol)
+{
+  if (lhs.current_size != rhs.current_size)
+  {
+    throw std::invalid_argument("vector sizes are unequal");
+  }
+  int size = lhs.current_size;
+  T* new_arr = new T[size];
+  for (int i = 0; i < size; i++)
+  {
+    new_arr[i] = handleMath(symbol, lhs.arr[i], rhs.arr[i]);
+  }
+  return vector<T>(new_arr, size);
+}
+
+
+template<typename T>
+T vector<T>::handleMath(char symbol,T left, T right)
+{
+  T result;
+  switch (symbol)
+  {
+    case '+':
+      result = left + right;
+      break;
+    case '-':
+      result = left - right;
+      break;
+    case '/':
+      result = left / right;
+      break;
+    case '*':
+      result = left * right;
+      break;
+    default:
+      throw std::invalid_argument("symbol not found");
+  }
+  return result;
+
+
+}
 #pragma endregion
 template <typename T>
 void vector<T>::set(int i, T val)

@@ -22,6 +22,7 @@ void Test3();
 void Test4();
 void Test2();
 void Test4();
+void Test5();
 
 int main()
 {
@@ -32,6 +33,7 @@ int main()
     Test2();
     Test3();
     Test4();
+    Test5();
 
   }
   catch (const std::out_of_range & oor) {
@@ -50,6 +52,27 @@ int main()
 
   return 0;
 }
+void Test5()
+{
+  //unary minus
+  //copy constructor
+  int test[] = { 5,1,2,3,4 };
+  cout << "-------Test 5---" << endl;
+  vector<int> vTest1 = { 1,2,3,4,5,6,7,8};
+  vector<int> vTest2 = { 2,2,2,2,2,2,2,2};
+  vector<int> vTest3 = vTest1 + vTest2;
+  vector<int> vTest4 = vTest1 - vTest2;
+  vector<int> vTest5 = vTest1 * vTest2;
+  vector<int> vTest6 = vTest5 / vTest2;
+  cout << "vTest1: " << vTest1 << endl;
+  cout << "vTest2: " << vTest2 << endl;
+  cout << "vTest3: " << vTest3 << endl;
+  cout << "vTest4: " << vTest4 << endl;
+  cout << "vTest5: " << vTest5 << endl;
+  cout << "vTest6: " << vTest6 << endl;
+  cout << "------- END----" << endl;
+}
+
 void Test4()
 {
   //unary minus

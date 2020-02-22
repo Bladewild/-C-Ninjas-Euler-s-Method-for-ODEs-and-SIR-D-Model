@@ -53,12 +53,16 @@ private:
   T* arr; // pointer to the first element of the underlying array
   int current_size;       // size of this myvec
   void init(int input_size);
+  static T handleMath(char symbol,T left, T right);
+  static vector<T> operatorhandler(const vector<T>& lhs, 
+    const vector<T>& rhs, char& symbol);
 public:
 
   vector(); // constructor
   vector(int size); // constructor
   vector(const T * input_array, const int input_size); // constructor
   vector(const vector<T>& otherVector);
+
 
   vector(std::initializer_list<T> l);
 
@@ -80,6 +84,17 @@ public:
   vector<T> operator-() const;
   template<typename U>
   friend ostream& operator << (ostream& os, const vector<U>& Obj);
+
+  template<typename U>
+  friend vector<U> operator+(const vector<U>& lhs, const vector<U>& rhs);
+  template<typename U>
+  friend vector<U> operator-(const vector<U>& lhs, const vector<U>& rhs);
+  template<typename U>
+  friend vector<U> operator/(const vector<U>& lhs, const vector<U>& rhs);
+  template<typename U>
+  friend vector<U> operator*(const vector<U>& lhs, const vector<U>& rhs);
+
+  
 
   vector<T>& operator = (const vector<T>& source);
 
@@ -123,6 +138,6 @@ Addition, subtraction, scalar multiplication, and vector multiplication (dot pro
 Unary minus
 An apply function accepting a function and returning a new vector containing the result of the function when called on the elements of the calling object, and in which the function f must have the signature T f(T) (for template type T)
 Stream operators for input/output of vector data - accepted input should be whitespace-delimited elements, and output should be single-space-delimited elements of the vector
-      */
+*/
 
 #endif
