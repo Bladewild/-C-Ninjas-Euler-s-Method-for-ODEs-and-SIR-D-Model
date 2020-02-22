@@ -8,7 +8,6 @@
 */
 #include <iostream>
 #include "vector.h"
-#include "main.h"
 
 using std::cout;
 using std::endl;
@@ -17,14 +16,58 @@ using std::endl;
 for range
 //sets
 */
+
+void InitialTest();
+void Test3();
+void Test4();
+void Test2();
+void Test4();
+
 int main()
 {
   
-  InitialTest();
-  Test2();
-  Test3();
+  try
+  {
+    InitialTest();
+    Test2();
+    Test3();
+    Test4();
+
+  }
+  catch (const std::out_of_range & oor) {
+    std::cerr << "\nOut of Range error: " << oor.what() << '\n';
+  }
+  catch (const std::invalid_argument & ia) {
+    std::cerr << "Invalid argument: " << ia.what() << '\n';
+  }
+  catch (const std::length_error & le) {
+    std::cerr << "Length error: " << le.what() << '\n';
+  }
+  catch (...)
+  {
+    std::cerr << "An uknown error has occured." << '\n';
+  }
 
   return 0;
+}
+void Test4()
+{
+  //unary minus
+  //copy constructor
+  //set test
+  cout << "-------Test 4---" << endl;
+  vector<int> vTest1 = { 1,2,3,4,5,6,7,8 };
+  cout << vTest1 << endl;
+  cout << "-------COPYING---" << endl;
+  vector<int> vTest2 = vector<int>(vTest1);
+  vTest2.set(0, 1);
+  vTest2.set(1, 1);
+  vTest2.set(2, 1);
+  vTest2.set(3, 1);
+  vTest2.set(4, 1);
+  cout << "vTest1: " << vTest1 << endl;
+  cout << "vTest2: " << vTest2 << endl;
+  cout << "------- END----" << endl;
 }
 void Test3()
 {

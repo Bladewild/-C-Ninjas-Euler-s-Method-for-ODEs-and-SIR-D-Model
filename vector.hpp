@@ -25,19 +25,33 @@ vector<T>::vector(std::initializer_list<T> init_list)
 }
 
 template<typename T>
-void vector<T>::init(int input_size)
+vector<T>::vector(const vector<T> & otherVector)
 {
 
+  cout << "Copy Constructor"<<std::endl;
+  cout << "Size: " << otherVector.current_size<< std::endl;
+  init(otherVector.current_size);
+  std::copy(otherVector.arr, otherVector.arr + otherVector.current_size, arr);
+}
+
+template<typename T>
+void vector<T>::init(int input_size)
+{
   if (input_size < 0)
   {
+    cout << "input_size: "<<input_size << std::endl;
     throw std::invalid_argument(" cannot be to a negative number.");
   }
   current_size = input_size;
   arr = new T[current_size];
+  cout << "CurrentSize:" << current_size<<std::endl;
   //arr is empty, remember to check
 
 }
 
+
+
+#pragma endregion
 
 template <typename T>
 int vector<T>::size() const
@@ -48,7 +62,7 @@ int vector<T>::size() const
 template <typename T>
 bool vector<T>::empty() const
 {
-  return (current_size<=0) ? true : false;
+  return (current_size <= 0) ? true : false;
 }
 template <typename T>
 void vector<T>::resize(const int new_size)
@@ -70,13 +84,40 @@ void vector<T>::resize(const int new_size)
 
 }
 
-#pragma endregion
+#pragma region Overloads
+
+/*
+  @ppre T must define - (unary operator)
+*/
+//template<typename T>
+//vector<T> vector<T>::operator-() const
+//{
+//   vector<T> complementV =
+
+//  delete[] arr;                       // delete the old vector
+
+//  return ComplexNumber(-(this->real), -(this->imaginary));
+//}
+
 template<typename T>
 vector<T>::~vector()
 {       // destructor
   delete[] arr;
 }
 
+
+template<typename T>
+ostream& operator << (ostream& os, const vector<T>& Obj)
+{
+
+  for (auto x : Obj)
+  {
+    os << x << " ";
+  }
+  return os;
+}
+
+#pragma endregion
 template <typename T>
 void vector<T>::set(int i, T val)
 {
@@ -110,14 +151,3 @@ Iter<T> vector<T>::end() const
   return Iter<T>(this, current_size);
 }
 
-//
-template<typename T>
-ostream& operator << (ostream& os, const vector<T>& Obj)
-{
-
-   for (auto x : Obj)
-   {
-     os << x << " ";
-   }
-  return os;
-}
