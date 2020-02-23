@@ -81,7 +81,9 @@ public:
    */
   T get(int i) const;
 
+
   vector<T> operator-() const;
+
   template<typename U>
   friend ostream& operator << (ostream& os, const vector<U>& Obj);
 
@@ -89,10 +91,14 @@ public:
   friend vector<U> operator+(const vector<U>& lhs, const vector<U>& rhs);
   template<typename U>
   friend vector<U> operator-(const vector<U>& lhs, const vector<U>& rhs);
+
+  //dot operator
   template<typename U>
-  friend vector<U> operator/(const vector<U>& lhs, const vector<U>& rhs);
+  friend U operator*(const vector<U>& lhs, const vector<U>& rhs);
   template<typename U>
-  friend vector<U> operator*(const vector<U>& lhs, const vector<U>& rhs);
+  friend vector<U> operator*(const U & lhsScalar, const vector<U>& rhs);
+  template<typename U>
+  friend vector<U> operator*(const vector<U>& lhs, const U& rhsScalar);
 
   
 

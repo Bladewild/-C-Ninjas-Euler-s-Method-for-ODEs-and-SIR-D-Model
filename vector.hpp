@@ -14,13 +14,13 @@ vector<T>::vector(int size) // constructor
 
 //array of refernce not allowed
 template <typename T>
-vector<T>::vector(const T * input_array,const int input_size) // constructor
+vector<T>::vector(const T* input_array, const int input_size) // constructor
 {
   init(input_size);
   std::copy(input_array, input_array + current_size, arr);
 }
 template<typename T>
-vector<T>::vector(std::initializer_list<T> init_list) 
+vector<T>::vector(std::initializer_list<T> init_list)
 {
   int index = 0;
   init(init_list.size());
@@ -33,10 +33,10 @@ vector<T>::vector(std::initializer_list<T> init_list)
 }
 
 template<typename T>
-vector<T>::vector(const vector<T> & otherVector)
+vector<T>::vector(const vector<T>& otherVector)
 {
-  cout << "Copy Constructor"<<std::endl;
-  cout << "Size: " << otherVector.current_size<< std::endl;
+  cout << "Copy Constructor" << std::endl;
+  cout << "Size: " << otherVector.current_size << std::endl;
   init(otherVector.current_size);
   std::copy(otherVector.arr, otherVector.arr + otherVector.current_size, arr);
 }
@@ -46,12 +46,12 @@ void vector<T>::init(int input_size)
 {
   if (input_size < 0)
   {
-    cout << "input_size: "<<input_size << std::endl;
+    cout << "input_size: " << input_size << std::endl;
     throw std::invalid_argument(" cannot be to a negative number.");
   }
   current_size = input_size;
   arr = new T[current_size];
-  cout << "CurrentSize:" << current_size<<std::endl;
+  cout << "CurrentSize:" << current_size << std::endl;
   //arr is empty, remember to check
 
 }
@@ -94,6 +94,7 @@ void vector<T>::resize(const int new_size)
 #pragma region Overloads
 
 /*
+  UNARY OPERATOR
   @ppre T must define - (unary operator)
 */
 
@@ -152,17 +153,52 @@ vector<T> operator-(const vector<T>& lhs, const vector<T>& rhs)
   char symbol = '-';
   return vector<T>::operatorhandler(lhs, rhs, symbol);
 }
+
+/*
+  @Pre += operator must be defined
+*/
 template<typename T>
-vector<T> operator/(const vector<T>& lhs, const vector<T>& rhs)
+T operator*(const vector<T>& lhs, const vector<T>& rhs)
 {
-  char symbol = '/';
-  return vector<T>::operatorhandler(lhs, rhs, symbol);
+  char symbol = '*';
+  vector<T> vTemp = vector<T>::operatorhandler(lhs, rhs, symbol);
+  //now add them all up together
+  T result = vTemp.get(0);
+  //add up rest
+  for (int i = 1; i < vTemp.current_size; i++)
+  {
+    result += vTemp.get(i);
+  }
+  return result;
+
 }
+
 template<typename T>
-vector<T> operator*(const vector<T>& lhs, const vector<T>& rhs)
+vector<T> operator*(const T& lhsScalar, const vector<T>& rhs)
 {
-  char symbol = '/';
-  return vector<T>::operatorhandler(lhs, rhs, symbol);
+  cout << "LEFTHAND" << std::endl;
+  char symbol = '*';
+  vector<T> vMultiply = rhs;
+  for (auto x : vMultiply)
+  {
+    x = lhsScalar;
+  }
+
+  return vector<T>::operatorhandler(vMultiply, rhs, symbol);
+}
+
+template<typename T>
+vector<T> operator*(const vector<T>& lhs, const  T& rhsScalar)
+{
+  cout << "RIGHTHAND" << std::endl;
+  char symbol = '*';
+  vector<T> vMultiply = lhs;
+  for (auto x : vMultiply)
+  {
+    x = rhsScalar;
+  }
+
+  return vector<T>::operatorhandler(lhs, vMultiply, symbol);
 }
 
 
@@ -170,6 +206,7 @@ template<typename T>
 vector<T> vector<T>::operatorhandler(const vector<T>& lhs,
   const vector<T>& rhs, char& symbol)
 {
+  //check if empty
   if (lhs.current_size != rhs.current_size)
   {
     throw std::invalid_argument("vector sizes are unequal");
@@ -196,15 +233,13 @@ T vector<T>::handleMath(char symbol,T left, T right)
     case '-':
       result = left - right;
       break;
-    case '/':
-      result = left / right;
-      break;
     case '*':
-      result = left * right;
+      result = (left * right);
       break;
     default:
       throw std::invalid_argument("symbol not found");
   }
+  cout <<symbol<<":"<< result << std::endl;
   return result;
 
 
