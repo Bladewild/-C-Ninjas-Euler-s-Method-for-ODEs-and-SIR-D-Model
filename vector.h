@@ -54,8 +54,8 @@ private:
   int current_size;       // size of this myvec
   void init(int input_size);
   static T handleMath(char symbol,T left, T right);
-  static vector<T> operatorhandler(const vector<T>& lhs, 
-    const vector<T>& rhs, char& symbol);
+  static vector<T> operatorhandler(const T lhsarr[], 
+    const T rhsarr[], char& symbol,const int leftsize,const int rightsize);
 public:
 
   vector(); // constructor

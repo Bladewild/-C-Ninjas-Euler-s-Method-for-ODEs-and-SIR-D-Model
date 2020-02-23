@@ -29,14 +29,14 @@ vector<T>::vector(std::initializer_list<T> init_list)
     arr[index] = element;
     index++;
   }
-  cout << "constructed with a " << current_size << "-element list\n";
+  //cout << "constructed with a " << current_size << "-element list\n";
 }
 
 template<typename T>
 vector<T>::vector(const vector<T>& otherVector)
 {
-  cout << "Copy Constructor" << std::endl;
-  cout << "Size: " << otherVector.current_size << std::endl;
+  //cout << "Copy Constructor" << std::endl;
+  //cout << "Size: " << otherVector.current_size << std::endl;
   init(otherVector.current_size);
   std::copy(otherVector.arr, otherVector.arr + otherVector.current_size, arr);
 }
@@ -46,12 +46,12 @@ void vector<T>::init(int input_size)
 {
   if (input_size < 0)
   {
-    cout << "input_size: " << input_size << std::endl;
+    //cout << "input_size: " << input_size << std::endl;
     throw std::invalid_argument(" cannot be to a negative number.");
   }
   current_size = input_size;
   arr = new T[current_size];
-  cout << "CurrentSize:" << current_size << std::endl;
+  //cout << "CurrentSize:" << current_size << std::endl;
   //arr is empty, remember to check
 
 }
@@ -145,13 +145,15 @@ template<typename T>
 vector<T> operator+(const vector<T>& lhs, const vector<T>& rhs)
 {
   char symbol = '+';
-  return vector<T>::operatorhandler(lhs, rhs, symbol);
+  return vector<T>::operatorhandler(lhs.arr, rhs.arr, symbol,lhs.current_size,
+    rhs.current_size);
 }
 template<typename T>
 vector<T> operator-(const vector<T>& lhs, const vector<T>& rhs)
 {
   char symbol = '-';
-  return vector<T>::operatorhandler(lhs, rhs, symbol);
+  return vector<T>::operatorhandler(lhs.arr, rhs.arr, symbol, lhs.current_size,
+    rhs.current_size);
 }
 
 /*
@@ -161,7 +163,8 @@ template<typename T>
 T operator*(const vector<T>& lhs, const vector<T>& rhs)
 {
   char symbol = '*';
-  vector<T> vTemp = vector<T>::operatorhandler(lhs, rhs, symbol);
+  vector<T> vTemp = vector<T>::operatorhandler(lhs.arr, rhs.arr, symbol,
+    lhs.current_size, rhs.current_size);
   //now add them all up together
   T result = vTemp.get(0);
   //add up rest
@@ -176,48 +179,61 @@ T operator*(const vector<T>& lhs, const vector<T>& rhs)
 template<typename T>
 vector<T> operator*(const T& lhsScalar, const vector<T>& rhs)
 {
-  cout << "LEFTHAND" << std::endl;
-  char symbol = '*';
-  vector<T> vMultiply = rhs;
-  for (auto x : vMultiply)
+  if (rhs.current_size <0)
   {
-    x = lhsScalar;
+    throw std::invalid_argument("vector size is < 0");
   }
-
-  return vector<T>::operatorhandler(vMultiply, rhs, symbol);
+  char symbol = '*';
+  int size = rhs.current_size;
+  T* new_arr = new T[size];
+  for (int i = 0; i < size; i++)
+  {
+    new_arr[i] = lhsScalar;
+  }
+  vector<T> v = vector<T>::operatorhandler(new_arr, rhs.arr, symbol, size, size);
+  delete[] new_arr;
+  return v;
 }
 
 template<typename T>
 vector<T> operator*(const vector<T>& lhs, const  T& rhsScalar)
 {
+  if (lhs.current_size < 0)
+  {
+    throw std::invalid_argument("vector size is < 0");
+  }
   cout << "RIGHTHAND" << std::endl;
   char symbol = '*';
-  vector<T> vMultiply = lhs;
-  for (auto x : vMultiply)
-  {
-    x = rhsScalar;
-  }
-
-  return vector<T>::operatorhandler(lhs, vMultiply, symbol);
-}
-
-
-template<typename T>
-vector<T> vector<T>::operatorhandler(const vector<T>& lhs,
-  const vector<T>& rhs, char& symbol)
-{
-  //check if empty
-  if (lhs.current_size != rhs.current_size)
-  {
-    throw std::invalid_argument("vector sizes are unequal");
-  }
   int size = lhs.current_size;
   T* new_arr = new T[size];
   for (int i = 0; i < size; i++)
   {
-    new_arr[i] = handleMath(symbol, lhs.arr[i], rhs.arr[i]);
+    new_arr[i] = rhsScalar;
   }
-  return vector<T>(new_arr, size);
+  vector<T> v = vector<T>::operatorhandler(lhs.arr, new_arr, symbol, size, size);
+  delete[] new_arr;
+  return v;
+}
+
+
+template<typename T>
+vector<T> vector<T>::operatorhandler(const T lhsarr[], const T rhsarr[],
+  char& symbol, const int leftsize, const int rightsize)
+{
+  //check if empty
+  if (leftsize != rightsize)
+  {
+    throw std::invalid_argument("array sizes are unequal");
+  }
+  int size = leftsize;
+  T* new_arr = new T[size];
+  for (int i = 0; i < size; i++)
+  {
+    new_arr[i] = handleMath(symbol, lhsarr[i], rhsarr[i]);
+  }
+  vector<T> v = vector<T>(new_arr, size);
+  delete[] new_arr;
+  return v;
 }
 
 
@@ -239,7 +255,7 @@ T vector<T>::handleMath(char symbol,T left, T right)
     default:
       throw std::invalid_argument("symbol not found");
   }
-  cout <<symbol<<":"<< result << std::endl;
+  //cout <<symbol<<":"<< result << std::endl;
   return result;
 
 
