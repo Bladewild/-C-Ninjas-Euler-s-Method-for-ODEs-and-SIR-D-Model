@@ -97,7 +97,6 @@ void vector<T>::resize(const int new_size)
   UNARY OPERATOR
   @ppre T must define - (unary operator)
 */
-
 template<typename T>
 vector<T> vector<T>::operator-() const
 {
@@ -108,8 +107,9 @@ vector<T> vector<T>::operator-() const
   {
     new_complementarr[i] = -(arr[i]);
   }
-
-  return vector(new_complementarr,current_size);
+  vector<T> v = vector(new_complementarr, current_size);
+  delete [] new_complementarr;
+  return v;
 }
 
 template<typename T>
