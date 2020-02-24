@@ -10,6 +10,7 @@
 #include "MyVector.h"
 
 using std::cout;
+using std::cin;
 using std::endl;
 //stuff tested
 /*
@@ -24,6 +25,7 @@ void Test2();
 void Test4();
 void Test5();
 void Test6();
+void Test7();
 
 int main()
 {
@@ -36,6 +38,7 @@ int main()
     Test4();
     Test5();
     Test6();
+    Test7();
 
   }
   catch (const std::out_of_range & oor) {
@@ -54,10 +57,21 @@ int main()
 
   return 0;
 }
-
-void Test6()
+void Test7()
 {
   //unary minus
+  int test[] = { 5,1,2,3,4 };
+  cout << "-------Test 6---" << endl;
+  vector<int> vTest1 = { 1,2,3,4,5,6,7,8 };
+  cout << "vTest1: " << vTest1 << endl;
+  cin >> vTest1;
+  cout << "vTest1: " << vTest1 << endl;
+  cout << "------- END----" << endl;
+
+}
+void Test6()
+{
+  //Test set and []
   int test[] = { 5,1,2,3,4 };
   cout << "-------Test 6---" << endl;
   vector<int> vTest1 = { 1,2,3,4,5,6,7,8 };

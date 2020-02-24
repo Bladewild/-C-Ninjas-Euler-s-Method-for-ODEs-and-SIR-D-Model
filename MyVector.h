@@ -4,10 +4,14 @@
 
 #include <iostream>
 #include <initializer_list>
+#include <iterator>
+#include <string>
+#include <sstream> 
 
 using std::string;
 using std::ostream;
 using std::cout;
+using std::istream;
 
 template<typename T>
 class vector;
@@ -83,6 +87,8 @@ public:
 
 
   vector<T> operator-() const;
+  template<typename U>
+  friend istream& operator >> (istream& finput, vector<U>& Obj);
 
   template<typename U>
   friend ostream& operator << (ostream& os, const vector<U>& Obj);

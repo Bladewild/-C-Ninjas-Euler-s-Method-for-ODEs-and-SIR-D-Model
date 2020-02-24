@@ -93,6 +93,49 @@ void vector<T>::resize(const int new_size)
 
 #pragma region Overloads
 
+template<typename T>
+istream& operator >> (istream& finput, vector<T>& Obj)
+{
+  //clears out entire vector
+  //check for invalid range
+
+  string temp_input;
+  std::getline(finput, temp_input);
+  //run until non empty line has been found.
+  while (temp_input.length() == 0)
+  {
+    std::getline(finput, temp_input);
+  }
+  std::istringstream tokenStream(temp_input);
+
+
+  std::istream_iterator<T> eos;              // end-of-stream iterator
+  std::istream_iterator<T> iit(tokenStream);   // stdin iterator
+  int size = 0;
+  //getsize first
+  while (iit != eos)
+  {
+    size++;
+    ++iit;
+  }
+  int index = 0;
+  T* new_arr = new T[size];
+  //restart and put into new array; done backwards
+  tokenStream = std::istringstream(temp_input);//reset stream
+  iit = std::istream_iterator<T>(tokenStream);
+  while (iit != eos)
+  {
+    new_arr[index] = *iit;
+    index++;
+    ++iit;
+  }
+  Obj = vector<T>(new_arr, size);
+  delete[] new_arr;
+
+
+  return finput;
+}
+
 /*
   @pre T must define == (unary operator)
   @pre T must define = (assingment operator)
@@ -172,7 +215,7 @@ vector<T> vector<T>::operator-() const
   {
     new_complementarr[i] = -(arr[i]);
   }
-  vector<T> v = vector(new_complementarr, current_size);
+  vector<T> v = vector<T>(new_complementarr, current_size);
   delete [] new_complementarr;
   return v;
 }
