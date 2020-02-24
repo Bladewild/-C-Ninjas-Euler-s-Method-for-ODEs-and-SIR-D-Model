@@ -1,4 +1,4 @@
-#include "vector.h"
+#include "MyVector.h"
 #pragma region Constructors
 
 template <typename T>
@@ -94,8 +94,73 @@ void vector<T>::resize(const int new_size)
 #pragma region Overloads
 
 /*
+  @pre T must define == (unary operator)
+  @pre T must define = (assingment operator)
+  @post returns -1 if not found
+*/
+template<typename T>
+const T vector<T>::operator [] (const T index_var) const
+{
+  if (current_size<=0)
+  {
+    throw std::out_of_range("No points to access, empty vector");
+  }
+
+  bool found = false;
+  int itr = 0;
+  T result = -1;
+
+  while (!found && itr < current_size)
+  {
+    T toCheck = arr[itr];
+    if (toCheck == index_var)
+    {
+      found = true;
+      result = arr[itr];
+    }
+    else
+    {
+      itr++;
+    }
+  }
+  return result;
+}
+/*
+  @pre T must define == (unary operator)
+  @pre T must define = (assingment operator)
+  @post returns element at position itr if 
+*/
+template<typename T>
+T& vector<T>::operator [] (const T index_var)
+{
+  if (current_size <= 0)
+  {
+    throw std::out_of_range("No points to access, empty vector");
+  }
+
+  bool found = false;
+  int itr = 0;
+  T result = -1;
+
+  while (!found && itr < current_size)
+  {
+    T toCheck = arr[itr];
+    if (toCheck == index_var)
+    {
+      found = true;
+    }
+    else
+    {
+      itr++;
+    }
+  }
+
+  return arr[itr];
+}
+
+/*
   UNARY OPERATOR
-  @ppre T must define - (unary operator)
+  @pre T must define - (unary operator)
 */
 template<typename T>
 vector<T> vector<T>::operator-() const

@@ -141,8 +141,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="vector.h" />
-    <ClInclude Include="vector.hpp" />
+    <ClInclude Include="MyVector.h" />
+    <ClInclude Include="MyVector.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

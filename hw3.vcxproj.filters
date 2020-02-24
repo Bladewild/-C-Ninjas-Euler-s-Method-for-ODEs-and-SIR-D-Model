@@ -20,11 +20,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="vector.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vector.h">
+    <ClInclude Include="MyVector.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyVector.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

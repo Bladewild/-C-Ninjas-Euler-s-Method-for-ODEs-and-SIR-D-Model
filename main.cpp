@@ -7,7 +7,7 @@
 * main file
 */
 #include <iostream>
-#include "vector.h"
+#include "MyVector.h"
 
 using std::cout;
 using std::endl;
@@ -23,6 +23,7 @@ void Test4();
 void Test2();
 void Test4();
 void Test5();
+void Test6();
 
 int main()
 {
@@ -34,6 +35,7 @@ int main()
     Test3();
     Test4();
     Test5();
+    Test6();
 
   }
   catch (const std::out_of_range & oor) {
@@ -51,6 +53,21 @@ int main()
   }
 
   return 0;
+}
+
+void Test6()
+{
+  //unary minus
+  int test[] = { 5,1,2,3,4 };
+  cout << "-------Test 6---" << endl;
+  vector<int> vTest1 = { 1,2,3,4,5,6,7,8 };
+  const vector<int> vTest2 = { 1,1,1,1,1,1,1,1 };
+  cout << "vTest1: " << vTest1 << endl;
+  cout << "vTest1: " << vTest2 << endl;
+  vTest1[5] = 8;
+  cout << "vTest1: " << vTest1 << endl;
+  cout << "------- END----" << endl;
+
 }
 void Test5()
 {

@@ -92,6 +92,9 @@ public:
   template<typename U>
   friend vector<U> operator-(const vector<U>& lhs, const vector<U>& rhs);
 
+  const T  operator [] (const T index_var) const;
+  T & operator [] (const T index_var);
+
   //dot operator
   template<typename U>
   friend U operator*(const vector<U>& lhs, const vector<U>& rhs);
@@ -123,7 +126,7 @@ int Iter<T>::operator* () const
 
 
 
-#include "vector.hpp"
+#include "MyVector.hpp"
 
 /*
 http://antonym.org/2014/02/c-plus-plus-11-range-based-for-loops.html
@@ -140,8 +143,8 @@ A means of resizing and determining the size of the vector with resize and size 
 Appropriate functions such that range-based for loops can be used on your vector//in dev
 Copy constructor/copy assignment operations //done
 Element access with the [] operator
-Addition, subtraction, scalar multiplication, and vector multiplication (dot product)
-Unary minus
+Addition, subtraction, scalar multiplication, and vector multiplication (dot product) //done
+Unary minus //done
 An apply function accepting a function and returning a new vector containing the result of the function when called on the elements of the calling object, and in which the function f must have the signature T f(T) (for template type T)
 Stream operators for input/output of vector data - accepted input should be whitespace-delimited elements, and output should be single-space-delimited elements of the vector
 */
