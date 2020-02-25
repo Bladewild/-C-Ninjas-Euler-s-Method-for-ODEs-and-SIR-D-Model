@@ -26,19 +26,29 @@ void Test4();
 void Test5();
 void Test6();
 void Test7();
+void Test8();
+
+int addone(int input)
+{
+  return input + 2;
+}
 
 int main()
 {
   
   try
   {
-    InitialTest();
-    Test2();
-    Test3();
-    Test4();
-    Test5();
-    Test6();
-    Test7();
+    //InitialTest();
+    //Test2();
+    //Test3();
+    //Test4();
+    //Test5();
+    //Test6();
+    //Test7();
+    //Test8();
+    //CallBackTests --apply--
+    
+    cout << "\ndone"<<std::endl;
 
   }
   catch (const std::out_of_range & oor) {
@@ -57,29 +67,57 @@ int main()
 
   return 0;
 }
+
+void Test8()
+{
+  cout << "-------Test 8---" << endl;
+  int test[] = { 5,1,2,3,4 };
+
+
+  vector<int> vTest1 = { 1,1,1,1,1 };
+  vector<int> vTestArr(test, 5);
+  cout << "vTest1: " << vTest1 << endl;
+  cout << "vTestArr: " << vTestArr << endl;
+  std::function<int(int)> testFunction = addone;
+  vector<int> vTest2 = vTest1.apply(testFunction);
+  vTest1.set(1, 1);
+  vTest1.set(2, 2);
+  vTestArr.set(1, 1);
+  vTestArr.set(2, 2);
+  cout << "vTest1: " << vTest1 << endl;
+  cout << "vTest2 " << vTest2 << endl;
+
+  cout << "------- END----" << endl;
+}
+
 void Test7()
 {
   //unary minus
-  int test[] = { 5,1,2,3,4 };
   cout << "-------Test 6---" << endl;
   vector<int> vTest1 = { 1,2,3,4,5,6,7,8 };
   cout << "vTest1: " << vTest1 << endl;
   cin >> vTest1;
   cout << "vTest1: " << vTest1 << endl;
   cout << "------- END----" << endl;
-
 }
+
 void Test6()
 {
   //Test set and []
-  int test[] = { 5,1,2,3,4 };
   cout << "-------Test 6---" << endl;
-  vector<int> vTest1 = { 1,2,3,4,5,6,7,8 };
-  const vector<int> vTest2 = { 1,1,1,1,1,1,1,1 };
+  vector<int> vTest1 = { 1,2,3,4,5,0,7,8 };
+  const vector<int> vTest2 = { 1,2,65,3,4,1,8,9 };
   cout << "vTest1: " << vTest1 << endl;
-  cout << "vTest1: " << vTest2 << endl;
-  vTest1[5] = 8;
+  cout << "vTest2: " << vTest2 << endl;
+  int toget = vTest2[2];
+  toget = 3;
+  vTest1[0] = 8;
+  int tochange = vTest1[0];
+  tochange = 90;
   cout << "vTest1: " << vTest1 << endl;
+  cout << "toget: " << toget << endl;
+  cout << "vTest2[2]: " << vTest2[2] << endl;
+  cout << "tochange: " << tochange << endl;
   cout << "------- END----" << endl;
 
 }
@@ -89,7 +127,6 @@ void Test5()
   //copy constructor
   //checks assingment I think
   //checks arithmatic
-  int test[] = { 5,1,2,3,4 };
   cout << "-------Test 5---" << endl;
   vector<int> vTest1 = { 1,2,3,4,5,6,7,8};
   vector<int> vTest2 = { 2,2,2,2,2,2,2,2};

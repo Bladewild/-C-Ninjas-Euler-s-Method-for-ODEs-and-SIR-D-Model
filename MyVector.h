@@ -7,6 +7,7 @@
 #include <iterator>
 #include <string>
 #include <sstream> 
+#include <functional>
 
 using std::string;
 using std::ostream;
@@ -63,7 +64,7 @@ private:
 public:
 
   vector(); // constructor
-  vector(int size); // constructor
+  explicit vector(int size); // constructor
   vector(const T * input_array, const int input_size); // constructor
   vector(const vector<T>& otherVector);
 
@@ -73,6 +74,7 @@ public:
   int size() const;
   bool empty() const;
 
+  //remove these two later
   /*!
     @Pre Assignment Operator T must be defined
 
@@ -92,6 +94,8 @@ public:
 
   template<typename U>
   friend ostream& operator << (ostream& os, const vector<U>& Obj);
+
+  vector<T> apply(std::function<T(T)> & f);
 
   template<typename U>
   friend vector<U> operator+(const vector<U>& lhs, const vector<U>& rhs);

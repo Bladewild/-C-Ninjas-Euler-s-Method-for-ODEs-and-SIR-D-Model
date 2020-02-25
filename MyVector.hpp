@@ -16,6 +16,7 @@ vector<T>::vector(int size) // constructor
 template <typename T>
 vector<T>::vector(const T* input_array, const int input_size) // constructor
 {
+  cout << "array Constructor" << std::endl;
   init(input_size);
   std::copy(input_array, input_array + current_size, arr);
 }
@@ -35,7 +36,7 @@ vector<T>::vector(std::initializer_list<T> init_list)
 template<typename T>
 vector<T>::vector(const vector<T>& otherVector)
 {
-  //cout << "Copy Constructor" << std::endl;
+  cout << "Copy Constructor" << std::endl;
   //cout << "Size: " << otherVector.current_size << std::endl;
   init(otherVector.current_size);
   std::copy(otherVector.arr, otherVector.arr + otherVector.current_size, arr);
@@ -144,29 +145,12 @@ istream& operator >> (istream& finput, vector<T>& Obj)
 template<typename T>
 const T vector<T>::operator [] (const T index_var) const
 {
-  if (current_size<=0)
-  {
-    throw std::out_of_range("No points to access, empty vector");
-  }
 
-  bool found = false;
-  int itr = 0;
-  T result = -1;
-
-  while (!found && itr < current_size)
+  if (index_var < 0 || index_var >= current_size)
   {
-    T toCheck = arr[itr];
-    if (toCheck == index_var)
-    {
-      found = true;
-      result = arr[itr];
-    }
-    else
-    {
-      itr++;
-    }
+    throw std::range_error(" cannot set out of bounds.");
   }
-  return result;
+  return arr[index_var];
 }
 /*
   @pre T must define == (unary operator)
@@ -176,29 +160,12 @@ const T vector<T>::operator [] (const T index_var) const
 template<typename T>
 T& vector<T>::operator [] (const T index_var)
 {
-  if (current_size <= 0)
+
+  if (index_var < 0 || index_var >= current_size)
   {
-    throw std::out_of_range("No points to access, empty vector");
+    throw std::range_error(" cannot set out of bounds.");
   }
-
-  bool found = false;
-  int itr = 0;
-  T result = -1;
-
-  while (!found && itr < current_size)
-  {
-    T toCheck = arr[itr];
-    if (toCheck == index_var)
-    {
-      found = true;
-    }
-    else
-    {
-      itr++;
-    }
-  }
-
-  return arr[itr];
+  return arr[index_var];
 }
 
 /*
@@ -221,12 +188,29 @@ vector<T> vector<T>::operator-() const
 }
 
 template<typename T>
-vector<T>& vector<T>::operator = (const vector<T>& source)
+vector<T> vector<T>::apply(std::function<T(T)> & f)
+{
+
+  T* new_arr = new T[current_size];
+  for (int i = 0; i < current_size; i++)
+  {
+    new_arr[i] = f(arr[i]);
+  }
+
+
+  vector<T> v = vector<T>(new_arr, current_size);
+  delete[] new_arr;
+
+  return v;
+}
+
+template<typename T>
+vector<T>& vector<T>::operator = (const vector<T> & source)
 {
   if (this != &source)
   {
-    std::copy(source.arr, source.arr + source.current_size, arr);
     current_size = source.current_size;
+    arr = source.arr; //does not cause reference problems
   }
   return *this;
 }
@@ -310,7 +294,7 @@ vector<T> operator*(const vector<T>& lhs, const  T& rhsScalar)
   {
     throw std::invalid_argument("vector size is < 0");
   }
-  cout << "RIGHTHAND" << std::endl;
+
   char symbol = '*';
   int size = lhs.current_size;
   T* new_arr = new T[size];
