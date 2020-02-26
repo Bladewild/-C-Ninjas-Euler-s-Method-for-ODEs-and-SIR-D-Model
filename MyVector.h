@@ -92,6 +92,7 @@ private:
   const T rhsarr[], char& symbol,const int leftsize,const int rightsize);
 public: 
 
+  string name="default";       // size of this myvec
   /*!
   * @brief Default Constructor, runs init(0)
   * @post create empty vector of size 0
@@ -105,6 +106,7 @@ public:
   * @pre size cannot be negative
   * @post creates vector of specified size
   */
+
   explicit vector(int size); // constructor
 
   /*!
@@ -148,8 +150,7 @@ public:
 * @post return bool of (current_size <= 0) ? true : false;
 */
   bool empty() const;
-
-
+  
   /*!
   * @brief  complements vector
   * @param[in]  otherVector
@@ -158,8 +159,7 @@ public:
   */
 
   vector<T> operator-() const;
-
-
+  
   /*!
   * @brief  replaces vector contents with input stream
   * @param[in]  finput  input stream
@@ -209,7 +209,7 @@ public:
   * @throw range_error vector is empty
   */
 
-  const T  operator [] (const T index_var) const;
+  const T  operator [] (const int index_var) const;
 
   /*!
   * @brief  returns reference of element at position
@@ -220,7 +220,7 @@ public:
   * @throw range_error vector is empty
   */
 
-  T & operator [] (const T index_var);
+  T & operator [] (const int index_var);
 
 
   //dot operator

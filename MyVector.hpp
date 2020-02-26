@@ -25,7 +25,7 @@ vector<T>::vector(std::initializer_list<T> init_list)
 {
   int index = 0;
   init(init_list.size());
-  for (auto& element : init_list)
+  for (auto element : init_list)
   {
     arr[index] = element;
     index++;
@@ -40,6 +40,7 @@ vector<T>::vector(const vector<T>& otherVector)
   //cout << "Size: " << otherVector.current_size << std::endl;
   init(otherVector.current_size);
   std::copy(otherVector.arr, otherVector.arr + otherVector.current_size, arr);
+  name = name + "-";
 }
 
 template<typename T>
@@ -137,7 +138,7 @@ istream& operator >> (istream& finput, vector<T>& Obj)
 
 
 template<typename T>
-const T vector<T>::operator [] (const T index_var) const
+const T vector<T>::operator [] (const int index_var) const
 {
   if (current_size == 0)
   {
@@ -156,7 +157,7 @@ const T vector<T>::operator [] (const T index_var) const
   @post returns element at position itr if 
 */
 template<typename T>
-T& vector<T>::operator [] (const T index_var)
+T& vector<T>::operator [] (const int index_var)
 {
 
   if (index_var < 0 || index_var >= current_size)
@@ -207,8 +208,16 @@ vector<T>& vector<T>::operator = (const vector<T> & source)
 {
   if (this != &source)
   {
+    delete[] arr;
+    cout << "COPYYING VECTOR" <<std:: endl;
     current_size = source.current_size;
-    arr = source.arr; //does not cause reference problems
+    init(current_size);
+    //std::copy(source.arr, source.arr + source.current_size, arr);
+    for (int i = 0; i < current_size; ++i)  // copy old vector into new one
+    {
+        arr[i] = source.arr[i];
+    }
+    name = source.name + "+++";
   }
   return *this;
 }
@@ -216,7 +225,19 @@ vector<T>& vector<T>::operator = (const vector<T> & source)
 template<typename T>
 vector<T>::~vector()
 {       // destructor
+  cout << "Deleting: " << name<<std::endl;
   delete[] arr;
+  /*
+  if (arr != NULL)
+  {
+
+    for (int i = 0; i < current_size; i++)
+    {
+      cout << arr[i] << " ";
+    }
+    cout << "----------" << std::endl;
+    delete[] arr;
+  }*/
 }
 
 

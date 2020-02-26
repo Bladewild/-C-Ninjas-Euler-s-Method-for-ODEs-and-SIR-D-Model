@@ -9,6 +9,7 @@
 #include <iostream>
 #include "MyVector.h"
 #include "Euler.h"
+#include "SIRD.h"
 
 using std::cout;
 using std::cin;
@@ -49,6 +50,12 @@ int main()
     //Test7();
     //Test8();
     //CallBackTests --apply--
+
+    SIRD modelTesting;
+    for (int i = 0; i < 20; i++)
+    {
+      modelTesting.step();
+    }
     
     cout << "\ndone"<<std::endl;
 
