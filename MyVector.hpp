@@ -16,7 +16,7 @@ vector<T>::vector(int size) // constructor
 template <typename T>
 vector<T>::vector(const T* input_array, const int input_size) // constructor
 {
-  cout << "array Constructor" << std::endl;
+  //cout << "array Constructor" << std::endl;
   init(input_size);
   std::copy(input_array, input_array + current_size, arr);
 }
@@ -36,7 +36,7 @@ vector<T>::vector(std::initializer_list<T> init_list)
 template<typename T>
 vector<T>::vector(const vector<T>& otherVector)
 {
-  cout << "Copy Constructor" << std::endl;
+  //cout << "Copy Constructor" << std::endl;
   //cout << "Size: " << otherVector.current_size << std::endl;
   init(otherVector.current_size);
   std::copy(otherVector.arr, otherVector.arr + otherVector.current_size, arr);
@@ -52,8 +52,6 @@ void vector<T>::init(int input_size)
   }
   current_size = input_size;
   arr = new T[current_size];
-  //cout << "CurrentSize:" << current_size << std::endl;
-  //arr is empty, remember to check
 
 }
 
@@ -137,14 +135,14 @@ istream& operator >> (istream& finput, vector<T>& Obj)
   return finput;
 }
 
-/*
-  @pre T must define == (unary operator)
-  @pre T must define = (assingment operator)
-  @post returns -1 if not found
-*/
+
 template<typename T>
 const T vector<T>::operator [] (const T index_var) const
 {
+  if (current_size == 0)
+  {
+    throw std::range_error(" vector is empty");
+  }
 
   if (index_var < 0 || index_var >= current_size)
   {
@@ -258,11 +256,11 @@ T operator*(const vector<T>& lhs, const vector<T>& rhs)
   vector<T> vTemp = vector<T>::operatorhandler(lhs.arr, rhs.arr, symbol,
     lhs.current_size, rhs.current_size);
   //now add them all up together
-  T result = vTemp.get(0);
+  T result = vTemp[0];
   //add up rest
   for (int i = 1; i < vTemp.current_size; i++)
   {
-    result += vTemp.get(i);
+    result += vTemp[i];
   }
   return result;
 
@@ -353,25 +351,7 @@ T vector<T>::handleMath(char symbol,T left, T right)
 
 }
 #pragma endregion
-template <typename T>
-void vector<T>::set(int i, T val)
-{
-  if (i < 0 || i >= current_size)
-  {
-    throw std::range_error(" cannot set out of bounds.");
-  }
-  arr[i] = val;
-}
 
-template <typename T>
-T vector<T>::get(int i) const
-{
-  if (i < 0 || i >= current_size)
-  {
-    throw std::range_error(" cannot set out of bounds.");
-  }
-  return arr[i];
-}
 //iterators
 
 template<typename T>
@@ -384,5 +364,15 @@ template<typename T>
 Iter<T> vector<T>::end() const
 {
   return Iter<T>(this, current_size);
+}
+
+template<typename T>
+T vector<T>::get(int i) const
+{
+  if (i < 0 || i >= current_size)
+  {
+    throw std::range_error(" cannot set out of bounds.");
+  }
+  return arr[i];
 }
 

@@ -141,6 +141,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Euler.h" />
+    <ClInclude Include="Euler.hpp" />
+    <ClInclude Include="SIRD.h" />
     <ClInclude Include="MyVector.h" />
     <ClInclude Include="MyVector.hpp" />
   </ItemGroup>

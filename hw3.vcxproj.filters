@@ -26,5 +26,14 @@
     <ClInclude Include="MyVector.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Euler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Euler.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SIRD.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

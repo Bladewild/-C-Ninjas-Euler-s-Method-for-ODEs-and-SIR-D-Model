@@ -8,6 +8,7 @@
 */
 #include <iostream>
 #include "MyVector.h"
+#include "Euler.h"
 
 using std::cout;
 using std::cin;
@@ -32,6 +33,7 @@ int addone(int input)
 {
   return input + 2;
 }
+
 
 int main()
 {
@@ -80,12 +82,14 @@ void Test8()
   cout << "vTestArr: " << vTestArr << endl;
   std::function<int(int)> testFunction = addone;
   vector<int> vTest2 = vTest1.apply(testFunction);
-  vTest1.set(1, 1);
-  vTest1.set(2, 2);
-  vTestArr.set(1, 1);
-  vTestArr.set(2, 2);
+  //vTest1.set(1, 1);
+  //vTest1.set(2, 2);
+  //vTestArr.set(1, 1);
+  //vTestArr.set(2, 2);
   cout << "vTest1: " << vTest1 << endl;
   cout << "vTest2 " << vTest2 << endl;
+
+
 
   cout << "------- END----" << endl;
 }
@@ -160,14 +164,10 @@ void Test4()
   cout << "-------COPYING---" << endl;
   vector<int> vTest2 = vector<int>(vTest1);
   vector<int> vTestarr(test,5);
-  vTest2.set(0, 1);
-  vTest2.set(1, 1);
-  vTest2.set(2, 1);
-  vTest2.set(3, 1);
-  vTest2.set(4, 1);
+  //vTest2.set(0, 1);
   
   vector<int> vTest3 = -vTest2;
-  vTest3.set(0, 2);
+  //vTest3.set(0, 2);
   cout << "vTest1: " << vTest1 << endl;
   cout << "vTest2: " << vTest2 << endl;
   cout << "vTestarr: " << vTestarr << endl;
@@ -225,11 +225,7 @@ void InitialTest()
   */
   cout << "-------Test 1---" << endl;
   vector<int> hello(5);
-  hello.set(0, 0);
-  hello.set(1, 1);
-  hello.set(2, 2);
-  hello.set(3, 3);
-  hello.set(4, 4);
+  //hello.set(0, 0);
   cout << hello << endl;
   cout << "------- END----" << endl;
 
