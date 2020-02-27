@@ -40,14 +40,14 @@ int main()
   try
   {
 
-    InitialTest();
-    Test2();
-    Test3();
-    Test4();
-    Test5();
-    Test6();
-    Test7();
-    Test8();
+    //InitialTest();
+    //Test2();
+    //Test3();
+    //Test4();
+    //Test5();
+    //Test6();
+    //Test7();
+    //Test8();
     //CallBackTests --apply--
     
     std::ofstream fout;

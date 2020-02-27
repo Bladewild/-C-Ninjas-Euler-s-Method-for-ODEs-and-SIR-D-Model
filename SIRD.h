@@ -49,7 +49,6 @@ public:
     //default 100 indivisuals, 1 infected,
     //[infection rate,recovery rate,death rate]
     vector<double> v ={0.01 ,0.1,0.05 };
-    v.name = "kevin";
 
     init(100.0, 1.0, 0.1, v);
     createODE();
@@ -65,23 +64,22 @@ public:
 
   void operator()()
   {
-    double tempS, tempI, tempR, tempD;
-    tempS = Susceptible();
-    tempI =Infected();
-    //---------------------------
-    tempR =Recovered();
-    tempD =Deceased();
-    S = tempS;
-    I = tempI;
-    R = tempR;
-    D = tempD;
-    
+	  (*this)(h);
   }
   //https://youtu.be/F6J3ZmXkMj0
 
-  SIRD& operator()(double input_step)
+  void operator()(double input_step)
   {
-    //do nothing for now
+    double tempS, tempI, tempR, tempD;
+    tempS = Susceptible();
+	tempI = Infected();
+	//---------------------------
+	tempR = Recovered();
+	tempD = Deceased();
+	S = tempS;
+	I = tempI;
+	R = tempR;
+	D = tempD;
   }
 
   friend ostream& operator << (ostream& os, const SIRD& Obj);

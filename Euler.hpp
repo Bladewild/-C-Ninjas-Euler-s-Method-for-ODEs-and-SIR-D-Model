@@ -1,12 +1,6 @@
 
 #include "Euler.h"
-template <typename T>
-Euler<T>::Euler() // default constructor
-{
-  ODE = NULL;
-  y = NULL;
-  h = NULL;
-}
+
 
 template <typename T>
 Euler<T>::Euler(const std::function<T(T)>& callback_f,const T initial_y0,const double input_h) // constructor
@@ -55,10 +49,3 @@ T Euler<T>::operator () (double input_step)
   return y ;
 
 }
-
-template<typename T>
-Euler<T>::~Euler()
-{
-  cout << "Deleting Euler" << endl;
-}
-

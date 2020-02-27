@@ -1,5 +1,4 @@
 #include "MyVector.h"
-#pragma region Constructors
 
 template <typename T>
 vector<T>::vector() // constructor
@@ -30,17 +29,18 @@ vector<T>::vector(std::initializer_list<T> init_list)
     arr[index] = element;
     index++;
   }
-  //cout << "constructed with a " << current_size << "-element list\n";
 }
 
 template<typename T>
 vector<T>::vector(const vector<T>& otherVector)
 {
-  //cout << "Copy Constructor" << std::endl;
-  //cout << "Size: " << otherVector.current_size << std::endl;
+  if (arr != NULL)
+  {
+    delete[] arr;
+  }
   init(otherVector.current_size);
   std::copy(otherVector.arr, otherVector.arr + otherVector.current_size, arr);
-  name = name + "-";
+
 }
 
 template<typename T>
@@ -48,7 +48,6 @@ void vector<T>::init(int input_size)
 {
   if (input_size < 0)
   {
-    //cout << "input_size: " << input_size << std::endl;
     throw std::invalid_argument(" cannot be to a negative number.");
   }
   current_size = input_size;
@@ -56,9 +55,6 @@ void vector<T>::init(int input_size)
 
 }
 
-
-
-#pragma endregion
 
 template <typename T>
 int vector<T>::size() const
@@ -91,7 +87,6 @@ void vector<T>::resize(const int new_size)
 
 }
 
-#pragma region Overloads
 
 template<typename T>
 istream& operator >> (istream& finput, vector<T>& Obj)
@@ -153,11 +148,7 @@ const T vector<T>::operator [] (const int index_var) const
   }
   return arr[index_var];
 }
-/*
-  @pre T must define == (unary operator)
-  @pre T must define = (assingment operator)
-  @post returns element at position itr if 
-*/
+
 template<typename T>
 T& vector<T>::operator [] (const int index_var)
 {
@@ -169,10 +160,7 @@ T& vector<T>::operator [] (const int index_var)
   return arr[index_var];
 }
 
-/*
-  UNARY OPERATOR
-  @pre T must define - (unary operator)
-*/
+
 template<typename T>
 vector<T> vector<T>::operator-() const
 {
@@ -214,35 +202,25 @@ vector<T>& vector<T>::operator = (const vector<T> & source)
 	{
 		delete[] arr;
 	}
-    cout << "COPYYING VECTOR" <<std:: endl;
     current_size = source.current_size;
     init(current_size);
-    //std::copy(source.arr, source.arr + source.current_size, arr);
-    for (int i = 0; i < current_size; ++i)  // copy old vector into new one
-    {
-        arr[i] = source.arr[i];
-    }
-    name = source.name + "+++";
+    std::copy(source.arr, source.arr + source.current_size, arr);
+    //for (int i = 0; i < current_size; ++i)  // copy old vector into new one
+    //{
+     //   arr[i] = source.arr[i];
+    //}
+
   }
   return *this;
 }
 
 template<typename T>
 vector<T>::~vector()
-{       // destructor
-  cout << "Deleting: " << name<<std::endl;
-  delete[] arr;
-  /*
-  if (arr != NULL)
+{       
+  if(arr!= NULL)
   {
-
-    for (int i = 0; i < current_size; i++)
-    {
-      cout << arr[i] << " ";
-    }
-    cout << "----------" << std::endl;
     delete[] arr;
-  }*/
+  }
 }
 
 
@@ -272,9 +250,7 @@ vector<T> operator-(const vector<T>& lhs, const vector<T>& rhs)
     rhs.current_size);
 }
 
-/*
-  @Pre += operator must be defined
-*/
+
 template<typename T>
 T operator*(const vector<T>& lhs, const vector<T>& rhs)
 {
@@ -376,7 +352,6 @@ T vector<T>::handleMath(char symbol,T left, T right)
 
 
 }
-#pragma endregion
 
 template<typename T>
 T* vector<T>::begin() const
@@ -389,36 +364,3 @@ T* vector<T>::end() const
 {
   return current_size > 0 ? &arr[current_size-1] : nullptr;
 }
-
-/*
-template<typename T>
-int vector<T>::operator* () const
-{
-  return (i < 0 || i >= current_size) ? &arr[0] : nullptr;
-
-}*/
-//iterators
-/*
-template<typename T>
-Iter<T> vector<T>::begin() const
-{
-  return Iter<T>(this, 0);
-}
-
-template<typename T>
-Iter<T> vector<T>::end() const
-{
-  return Iter<T>(this, current_size);
-}
-
-template<typename T>
-T vector<T>::get(int i) const
-{
-  if (i < 0 || i >= current_size)
-  {
-    throw std::range_error(" cannot set out of bounds.");
-  }
-  return arr[i];
-}
-
-*/

@@ -21,7 +21,7 @@ private:
   function <T(T)> ODE;
 public:
 
-  Euler(); // constructor
+  Euler() = default; // constructor
   Euler(const std::function<T(T)>& callback_f,const T initial_y0,const double input_h = 0.01f); // constructor
 
   Euler(const Euler<T>& otherEuler);
@@ -36,9 +36,8 @@ public:
 
   Euler<T>& operator = (const Euler<T>& source);
 
+  //~Euler() = default;
 
-
-  ~Euler();
 };
 
 
