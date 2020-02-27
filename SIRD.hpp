@@ -3,10 +3,11 @@
 ostream& operator<<(ostream& os, const SIRD& Obj)
 {
 
-  os << "----STATUS----"<< endl;
-  os << Obj.S<<" " << Obj.I << " " << Obj.R << " " << Obj.D<<endl;
-  os << "SUM: " << (Obj.S + Obj.I + Obj.R + Obj.D )<< endl;
-  os << "------------" << endl;
+  //os << "----STATUS----"<< endl;
+  //os << Obj.S<<" " << Obj.I << " " << Obj.R << " " << Obj.D<<endl;
+  //os << "SUM: " << (Obj.S + Obj.I + Obj.R + Obj.D )<< endl;
+  //os << "------------" << endl;
+  os << Obj.S<<"," << Obj.I << "," << Obj.R << "," << Obj.D<<"\n";
   return os;
 }
 
@@ -46,7 +47,7 @@ void SIRD::init(double init_population, double init_infected, double step_size, 
   vRates = v_input;
   Nn = N0;
   In = I0;
-  cout << "INITILIAZED" << endl;
+  //cout << "INITILIAZED" << endl;
 
   S = init_population-init_infected;
   I = init_infected;

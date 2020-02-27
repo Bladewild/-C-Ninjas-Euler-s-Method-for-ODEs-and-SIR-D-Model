@@ -109,6 +109,7 @@ istream& operator >> (istream& finput, vector<T>& Obj)
   std::istringstream tokenStream(temp_input);
 
 
+  
   std::istream_iterator<T> eos;              // end-of-stream iterator
   std::istream_iterator<T> iit(tokenStream);   // stdin iterator
   int size = 0;
@@ -123,6 +124,7 @@ istream& operator >> (istream& finput, vector<T>& Obj)
   //restart and put into new array; done backwards
   tokenStream = std::istringstream(temp_input);//reset stream
   iit = std::istream_iterator<T>(tokenStream);
+  //get contents
   while (iit != eos)
   {
     new_arr[index] = *iit;
@@ -208,7 +210,10 @@ vector<T>& vector<T>::operator = (const vector<T> & source)
 {
   if (this != &source)
   {
-    delete[] arr;
+	if (arr != NULL)
+	{
+		delete[] arr;
+	}
     cout << "COPYYING VECTOR" <<std:: endl;
     current_size = source.current_size;
     init(current_size);
@@ -373,8 +378,27 @@ T vector<T>::handleMath(char symbol,T left, T right)
 }
 #pragma endregion
 
-//iterators
+template<typename T>
+T* vector<T>::begin() const
+{
+  return current_size > 0 ? &arr[0] : nullptr;
+}
 
+template<typename T>
+T* vector<T>::end() const
+{
+  return current_size > 0 ? &arr[current_size-1] : nullptr;
+}
+
+/*
+template<typename T>
+int vector<T>::operator* () const
+{
+  return (i < 0 || i >= current_size) ? &arr[0] : nullptr;
+
+}*/
+//iterators
+/*
 template<typename T>
 Iter<T> vector<T>::begin() const
 {
@@ -397,3 +421,4 @@ T vector<T>::get(int i) const
   return arr[i];
 }
 
+*/

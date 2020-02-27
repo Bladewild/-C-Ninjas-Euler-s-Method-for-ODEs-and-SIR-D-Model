@@ -16,7 +16,7 @@ using std::istream;
 
 template<typename T>
 class vector;
-
+/*
 template<typename T>
 class Iter
 {
@@ -50,7 +50,7 @@ private:
   int _pos;
   const vector<T>* _p_vec;
 };
-
+*/
 template<typename T>
 class vector
 {
@@ -272,18 +272,25 @@ public:
   ~vector();
 
   void resize(const int new_size);
-  T get(int i) const;
+  //T get(int i) const;
 
-  Iter<T> begin() const;
+  T* begin() const;
 
-  Iter<T> end() const;
+  T* end() const;
+
+  //operator*() const;
+
+  //Iter<T> begin() const;
+
+  //Iter<T> end() const;
 };
-
+/*
 template<typename T>
 int Iter<T>::operator* () const
 {
   return _p_vec->get(_pos);
-}
+  
+}*/
 
 
 

@@ -48,8 +48,8 @@ template<typename T>
 T Euler<T>::operator () (double input_step)
 {
   T result = ODE(y);
-  cout << "Result:" << result<<endl;
-  cout << "Result,stepsize:" << result*input_step << endl;
+  //cout << "Result:" << result<<endl;
+  //cout << "Result,stepsize:" << result*input_step << endl;
   y = y + input_step* result; //udpate first one only
 
   return y ;

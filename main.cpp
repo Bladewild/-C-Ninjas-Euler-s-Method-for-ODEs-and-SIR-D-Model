@@ -10,6 +10,7 @@
 #include "MyVector.h"
 #include "Euler.h"
 #include "SIRD.h"
+#include <fstream>
 
 using std::cout;
 using std::cin;
@@ -19,7 +20,10 @@ using std::endl;
 for range
 //sets
 */
-
+int addone(int input)
+{
+  return input + 2;
+}
 void InitialTest();
 void Test3();
 void Test4();
@@ -30,33 +34,37 @@ void Test6();
 void Test7();
 void Test8();
 
-int addone(int input)
-{
-  return input + 2;
-}
-
-
 int main()
 {
   
   try
   {
-    //InitialTest();
-    //Test2();
-    //Test3();
-    //Test4();
-    //Test5();
-    //Test6();
-    //Test7();
-    //Test8();
-    //CallBackTests --apply--
 
-    SIRD modelTesting;
-    for (int i = 0; i < 20; i++)
-    {
-      modelTesting.step();
-    }
+    InitialTest();
+    Test2();
+    Test3();
+    Test4();
+    Test5();
+    Test6();
+    Test7();
+    Test8();
+    //CallBackTests --apply--
     
+    std::ofstream fout;
+    fout.open("data.csv");
+    float stepsize = 0.1;
+    float days = 200;
+    SIRD modelTesting;
+    fout << "Timestep,Susecptible,Infected,Recovered,Deceased\n";
+    for (float current_step=0; current_step < days; current_step+=stepsize)
+    {
+      fout << current_step + stepsize << ",";
+      modelTesting();
+      fout << modelTesting;
+
+    }
+
+    fout.close();
     cout << "\ndone"<<std::endl;
 
   }
@@ -206,7 +214,7 @@ void Test2()
   vector v
   */
   cout << "-------Test 2---" << endl;
-  vector<int> vTest = { 1,2,3,4,5,6,7 };
+  vector<int> vTest = { 1,2,3,4,5,6,7,1,1,1 };
   cout << vTest << endl;
   cout << "isEmpty? " << vTest.empty() << endl;
   vector<int> vTest2 = {};

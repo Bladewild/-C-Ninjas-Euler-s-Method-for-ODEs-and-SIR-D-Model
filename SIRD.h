@@ -51,7 +51,7 @@ public:
     vector<double> v ={0.01 ,0.1,0.05 };
     v.name = "kevin";
 
-    init(100.0, 1.0, 1, v);
+    init(100.0, 1.0, 0.1, v);
     createODE();
 
   }
@@ -63,37 +63,19 @@ public:
 
   
 
-  void step()
+  void operator()()
   {
-    /*
-    //calculate susceptible people (S)
-    S = Susceptible();
-    //calculate infected people (I)
-    I=Infected();
-    //udpate infected given
-    //---------------------------
-    //calculate deceased people
-    R=Recovered();
-    //calculate recovered people
-    D=Deceased();*/
-    
     double tempS, tempI, tempR, tempD;
-    //calculate susceptible people (S)
     tempS = Susceptible();
-    //calculate infected people (I)
     tempI =Infected();
-    //udpate infected given
     //---------------------------
-    //calculate deceased people
     tempR =Recovered();
-    //calculate recovered people
     tempD =Deceased();
     S = tempS;
     I = tempI;
     R = tempR;
     D = tempD;
     
-    cout << *this;
   }
   //https://youtu.be/F6J3ZmXkMj0
 
