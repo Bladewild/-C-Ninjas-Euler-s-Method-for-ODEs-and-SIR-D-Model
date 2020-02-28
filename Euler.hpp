@@ -42,6 +42,10 @@ T Euler<T>::operator()()
 template<typename T>
 T Euler<T>::operator () (double input_step)
 {	
+  if (input_step <= 0)
+  {
+    throw std::invalid_argument("input_step cannot be < 0 or = 0");
+  }
   //cout << "Result:" << result<<endl;
   //cout << "Result,stepsize:" << result*input_step << endl;
   y = y + input_step* ODE(y); //udpate first one only

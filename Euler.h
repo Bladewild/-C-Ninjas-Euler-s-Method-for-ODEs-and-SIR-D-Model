@@ -25,58 +25,59 @@ template<typename T>
 class Euler
 {
 private:
+  function <T(T)> ODE;
   T y; //state
   double h; //step size
-  function <T(T)> ODE;
 public:
-
+  /*!
+  * @brief uses default c++ implementation
+  * @brief useful for initializing and assign later.
+  */
   Euler() = default;
 
   /*!
-  * @brief
-  * @param[in]
-  * @pre 
+  * @brief constructor
+  * @param[in] callback_f function to apply to y state
+  * @param[in] initial_y0 starting state of y
+  * @param[in] input_h h step_size
   * @post assigns variables
   */
   Euler(const std::function<T(T)>& callback_f, const T initial_y0, const double input_h) :
     ODE(callback_f), y(initial_y0), h(input_h) {};
 
   /*!
-  * @brief
-  * @param[in]
-  * @pre
-  * @post
-  * @throw
+  * @brief copy constructor
+  * @param[in] otherEuler
+  * @post copies Euler content to this object to be constructed
   */
   Euler(const Euler<T>& otherEuler) :
     ODE(otherEuler.ODE), y(otherEuler.y), h(otherEuler.h) {};
   
   /*  
   * @brief calls ()(double_input) with var h as step size
-  * @param[in]
-  * @pre
-  * @post
-  * @throw 
+  * @post steps by default h and updates function 
+  * @post y is updated to y+1 with ODE
   */
 
   T operator()();
 
-   /*!
-  * @brief
-  * @param[in]
-  * @pre
-  * @post
-  * @throw
+  /*!
+  * @brief predicts y+1 with ODE function
+  * @param[in] input_setp
+  * @pre input_step is > 0
+  * @pre T + T (addition) defined
+  * @pre T =  (assignment) defined
+  * @post y updated with y +ODE(y)
+  * @post returns new y of type  T
+  * @throw invalid_argument if negative or zero
   */
 
   T operator()(double input_step);
 
   /*!
-  * @brief
-  * @param[in]
-  * @pre
-  * @post
-  * @throw
+  * @brief assignment operator
+  * @param[in] source Euler object
+  * @post copies source's content to *this
   */
   Euler<T>& operator = (const Euler<T>& source);
 

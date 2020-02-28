@@ -13,7 +13,7 @@
 
 #include <iostream>
 #include <functional>
-#include "MyVector.h"
+#include "vector.h"
 #include "Euler.h"
 
 using std::cout;
@@ -31,7 +31,7 @@ private:
   Euler<vector<double>> SIRDeuler;
 
   void createODE();
-
+  //void init(double init_population, double init_infected, double step_size, vector<double>& v_input);
 public:
 
   /*
@@ -101,6 +101,6 @@ public:
     
 };
 
-#include "SIRD.cpp"
+//#include "SIRD.cpp"
 
 #endif

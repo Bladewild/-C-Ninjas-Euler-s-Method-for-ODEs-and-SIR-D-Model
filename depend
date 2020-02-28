@@ -1,2 +1,2 @@
-main.o: main.cpp MyVector.h MyVector.hpp Euler.h Euler.hpp SIRD.h \
- SIRD.hpp
+main.o: main.cpp vector.h vector.hpp Euler.h Euler.hpp SIRD.h
+SIRD.o: SIRD.cpp SIRD.h vector.h vector.hpp Euler.h Euler.hpp

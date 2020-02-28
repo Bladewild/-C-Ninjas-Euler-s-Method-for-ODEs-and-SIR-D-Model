@@ -6,12 +6,12 @@
 #
 # Programmer :  Rob Wiehage
 # Modified by:  Alain Markus P. Santos-Tankia
-# Assignment :  Linear Interpolator
+# Assignment :  Homework 3 - Euler's Method for ODEs and SIR(D) Model
 #
 # Instructor :  Professor Price
 # Course     :  CS5201 Srping 2020
 # Semester   :  Spring 2020
-# Date 2/4/20
+# Date 2/28/20
 #
 ###############################################################################
 

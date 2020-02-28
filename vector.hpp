@@ -1,4 +1,4 @@
-#include "MyVector.h"
+#include "vector.h"
 
 template <typename T>
 vector<T>::vector(int size) // constructor
