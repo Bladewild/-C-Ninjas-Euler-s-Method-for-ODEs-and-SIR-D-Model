@@ -1,3 +1,12 @@
+/*
+* Author:
+* File: main.cpp Date: 2/13/20
+* Class: CS 5201
+* Instructor :
+*
+* MyVector file
+*/
+
 #ifndef VECTOR_H
 #define VECTOR_H
 

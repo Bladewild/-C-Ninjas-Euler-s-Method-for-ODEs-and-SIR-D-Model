@@ -1,20 +1,40 @@
 #include "SIRD.h"
 
-SIRD::SIRD()
+SIRD::SIRD() :
+  h(0.1), vRates(vector<double>{0.01, 0.1, 0.05 }),
+  state(vector<double>{ 100, 1, 0.0, 0.0})
 {
-  //default 100 indivisuals, 1 infected,
-  //[infection rate,recovery rate,death rate]
-  vector<double> v = { 0.01 ,0.1,0.05 };
-
-  init(100.0, 1.0, 0.1, v);
   createODE();
 
 }
 
-SIRD::SIRD(double init_population, double init_infected, double step_size, vector<double> v_input)
+SIRD::SIRD(double init_population, double init_infected, double step_size, vector<double> v_input) :
+  h(step_size), vRates(v_input),
+  state(vector<double>{ (init_population - init_infected), init_infected, 0.0, 0.0})
 {
-  init(init_population, init_infected, step_size, v_input);
   createODE();
+}
+
+void SIRD::createODE()
+{
+  auto ODESIRD =
+    [=](vector<double> stateGiven)
+  {
+    double susceptibility = -(vRates[0] * stateGiven[1] * stateGiven[0]);
+    //infected
+    double first = (vRates[0] * stateGiven[1] * stateGiven[0]);
+    double second = (vRates[1] * stateGiven[1]);
+    double third = (vRates[2] * stateGiven[1]);
+
+    double infected = (first - second - third);
+    //-----
+    double recovered = vRates[1] * stateGiven[1];
+    double dead = vRates[2] * stateGiven[1];
+    vector<double> toReturn = { susceptibility, infected, recovered, dead };
+    return toReturn;
+  };
+
+  SIRDeuler = Euler<vector<double>>(ODESIRD, state, h);
 }
 
 void SIRD::operator()()
@@ -57,36 +77,11 @@ SIRD& SIRD::operator=(const SIRD& source)
 
 
 
-void SIRD::createODE()
-{
-  
-  auto ODESIRD =
-	  [=](vector<double> stateGiven) 
-      {
-	  double susceptibility = -(vRates[0] * stateGiven[1] * stateGiven[0]);
-	  //infected
-	  double first = (vRates[0] * stateGiven[1] * stateGiven[0]);
-	  double second = (vRates[1] * stateGiven[1]);
-	  double third = (vRates[2] * stateGiven[1]);
 
-	  double infected = (first - second - third);
-	  //-----
-	  double recovered = vRates[1] * stateGiven[1];
-	  double dead = vRates[2] * stateGiven[1];
-	  vector<double> toReturn = { susceptibility, infected, recovered, dead };
-	  return toReturn;
-	};
-
-  SIRDeuler = Euler<vector<double>>(ODESIRD, state, h);
-}
-
+/*
 void SIRD::init(double init_population, double init_infected, double step_size, vector<double>& v_input)
 {
-  h = step_size;
-  vRates = v_input;
-
   state = vector<double>{ (init_population - init_infected),init_infected,
   0.0,0.0};
-  /*
-  */
 }
+*/

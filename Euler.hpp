@@ -1,7 +1,7 @@
 
 #include "Euler.h"
 
-
+/*
 template <typename T>
 Euler<T>::Euler(const std::function<T(T)>& callback_f,const T initial_y0,const double input_h) // constructor
 {
@@ -17,7 +17,7 @@ Euler<T>::Euler(const Euler<T>& otherEuler)
   y = otherEuler.y;
   h = otherEuler.h;
 }
-
+*/
 
 template<typename T>
 Euler<T>& Euler<T>::operator = (const Euler<T>& source)
