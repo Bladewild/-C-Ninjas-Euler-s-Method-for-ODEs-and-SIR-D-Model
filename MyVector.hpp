@@ -1,11 +1,6 @@
 #include "MyVector.h"
 
 template <typename T>
-vector<T>::vector() // constructor
-{
-  init(0);
-}
-template <typename T>
 vector<T>::vector(int size) // constructor
 {
   init(size);
@@ -15,15 +10,14 @@ vector<T>::vector(int size) // constructor
 template <typename T>
 vector<T>::vector(const T* input_array, const int input_size) // constructor
 {
-  //cout << "array Constructor" << std::endl;
   init(input_size);
   std::copy(input_array, input_array + current_size, arr);
 }
 template<typename T>
 vector<T>::vector(std::initializer_list<T> init_list)
 {
-  int index = 0;
   init(init_list.size());
+  int index = 0;
   for (auto element : init_list)
   {
     arr[index] = element;
@@ -34,10 +28,6 @@ vector<T>::vector(std::initializer_list<T> init_list)
 template<typename T>
 vector<T>::vector(const vector<T>& otherVector)
 {
-  if (arr != NULL)
-  {
-    delete[] arr;
-  }
   init(otherVector.current_size);
   std::copy(otherVector.arr, otherVector.arr + otherVector.current_size, arr);
 
@@ -70,16 +60,19 @@ bool vector<T>::empty() const
 template <typename T>
 void vector<T>::resize(const int new_size)
 {
-  //do nothing is same size
+  if (new_size < 0)
+  {
+    throw std::invalid_argument(" cannot be to a negative number.");
+  }
   if (new_size != current_size)
   {
-    if (new_size < 1)
-    {
-      throw std::invalid_argument("cannot set size given");
-    }
+    
     T* new_arr = new T[new_size];   // allocate a new array on the free store
     current_size = new_size;
-    std::copy(arr, arr + new_size, new_arr);
+    if (new_size > 0) //allow 0 element vector
+    {
+      std::copy(arr, arr + new_size, new_arr);
+    }
 
     delete[] arr;                       // delete the old vector
     arr = new_arr;
@@ -87,6 +80,20 @@ void vector<T>::resize(const int new_size)
 
 }
 
+template<typename T>
+vector<T> vector<T>::operator-() const
+{
+  //check if vector is empty;
+  T* new_complementarr = new T[current_size];
+
+  for (int i = 0; i < current_size; i++)
+  {
+    new_complementarr[i] = -(arr[i]);
+  }
+  vector<T> v = vector<T>(new_complementarr, current_size);
+  delete[] new_complementarr;
+  return v;
+}
 
 template<typename T>
 istream& operator >> (istream& finput, vector<T>& Obj)
@@ -133,6 +140,15 @@ istream& operator >> (istream& finput, vector<T>& Obj)
   return finput;
 }
 
+template<typename T>
+ostream& operator << (ostream& os, const vector<T>& Obj)
+{
+  for (auto x : Obj)
+  {
+    os << x << " ";
+  }
+  return os;
+}
 
 template<typename T>
 const T vector<T>::operator [] (const int index_var) const
@@ -161,20 +177,6 @@ T& vector<T>::operator [] (const int index_var)
 }
 
 
-template<typename T>
-vector<T> vector<T>::operator-() const
-{
-  //check if vector is empty;
-  T* new_complementarr = new T[current_size];
-
-  for (int i = 0; i < current_size; i++)
-  {
-    new_complementarr[i] = -(arr[i]);
-  }
-  vector<T> v = vector<T>(new_complementarr, current_size);
-  delete [] new_complementarr;
-  return v;
-}
 
 template<typename T>
 vector<T> vector<T>::apply(std::function<T(T)> & f)
@@ -185,7 +187,6 @@ vector<T> vector<T>::apply(std::function<T(T)> & f)
   {
     new_arr[i] = f(arr[i]);
   }
-
 
   vector<T> v = vector<T>(new_arr, current_size);
   delete[] new_arr;
@@ -198,17 +199,13 @@ vector<T>& vector<T>::operator = (const vector<T> & source)
 {
   if (this != &source)
   {
-	if (arr != NULL)
-	{
-		delete[] arr;
-	}
+	  if (arr != NULL)
+	  {
+		  delete[] arr;
+	  }
     current_size = source.current_size;
     init(current_size);
     std::copy(source.arr, source.arr + source.current_size, arr);
-    //for (int i = 0; i < current_size; ++i)  // copy old vector into new one
-    //{
-     //   arr[i] = source.arr[i];
-    //}
 
   }
   return *this;
@@ -223,17 +220,6 @@ vector<T>::~vector()
   }
 }
 
-
-template<typename T>
-ostream& operator << (ostream& os, const vector<T>& Obj)
-{
-
-  for (auto x : Obj)
-  {
-    os << x << " ";
-  }
-  return os;
-}
 
 template<typename T>
 vector<T> operator+(const vector<T>& lhs, const vector<T>& rhs)
@@ -309,7 +295,7 @@ vector<T> operator*(const vector<T>& lhs, const  T& rhsScalar)
 
 
 template<typename T>
-vector<T> vector<T>::operatorhandler(const T lhsarr[], const T rhsarr[],
+vector<T> vector<T>::operatorhandler(const T lhsarr[], const T rhsarr[],const
   char& symbol, const int leftsize, const int rightsize)
 {
   //check if empty
@@ -347,7 +333,6 @@ T vector<T>::handleMath(char symbol,T left, T right)
     default:
       throw std::invalid_argument("symbol not found");
   }
-  //cout <<symbol<<":"<< result << std::endl;
   return result;
 
 
@@ -362,5 +347,5 @@ T* vector<T>::begin() const
 template<typename T>
 T* vector<T>::end() const
 {
-  return current_size > 0 ? &arr[current_size-1] : nullptr;
+  return current_size > 0 ? &arr[current_size] : nullptr;
 }

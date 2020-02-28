@@ -32,11 +32,11 @@
     <ClInclude Include="Euler.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="SIRD.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="SIRD.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SIRD.cpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

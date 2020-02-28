@@ -18,22 +18,12 @@ using std::ostream;
 class SIRD
 {
 private:
-  double N0;
-  double I0;
-  double Nn;//current
-  double In;//current
+
   double h;
-  double S;
-  double I;
-  double R;
-  double D;
-
-
-  Euler<double> Susceptible;
-  Euler<double> Infected;
-  Euler<double> Deceased;
-  Euler<double> Recovered;
   vector<double> vRates;
+  vector<double> state;
+  Euler<vector<double>> SIRDeuler;
+
   void createODE();
   void init(double init_population, double init_infected, double step_size, vector<double>& v_input);
 
@@ -44,60 +34,68 @@ public:
   A constructor accepting the initial total population (N0), the initial number of infected (I0), 
   and a step size (h), and a vector [β,ν,δ], which should default to values provided in the driver instructions
   */
-  SIRD()
-  {
-    //default 100 indivisuals, 1 infected,
-    //[infection rate,recovery rate,death rate]
-    vector<double> v ={0.01 ,0.1,0.05 };
 
-    init(100.0, 1.0, 0.1, v);
-    createODE();
+  /*!
+  * @brief
+  * @param[in]
+  * @pre
+  * @post
+  * @throw
+  */
+  SIRD();
 
-  }
-  SIRD(double init_population,double init_infected, double step_size,vector<double> v_input)
-  {
-    init(init_population, init_infected, step_size, v_input);
-    createODE();
-  }
 
-  
+  /*!
+  * @brief
+  * @param[in]
+  * @pre
+  * @post
+  * @throw
+  */
 
-  void operator()()
-  {
-	  (*this)(h);
-  }
-  //https://youtu.be/F6J3ZmXkMj0
+  SIRD(double init_population, double init_infected, double step_size, vector<double> v_input);
 
-  void operator()(double input_step)
-  {
-    double tempS, tempI, tempR, tempD;
-    tempS = Susceptible();
-	tempI = Infected();
-	//---------------------------
-	tempR = Recovered();
-	tempD = Deceased();
-	S = tempS;
-	I = tempI;
-	R = tempR;
-	D = tempD;
-  }
+  /*!
+  * @brief
+  * @param[in]
+  * @pre
+  * @post
+  * @throw
+  */
 
+  void operator()();
+
+  /*!
+  * @brief
+  * @param[in]
+  * @pre
+  * @post
+  * @throw
+  */
+  void operator()(double input_step);
+
+  /*!
+  * @brief
+  * @param[in]
+  * @pre
+  * @post
+  * @throw
+  */
   friend ostream& operator << (ostream& os, const SIRD& Obj);
-  ~SIRD();
-  /*
+
+  /*!
+  * @brief
+  * @param[in]
+  * @pre
+  * @post
+  * @throw
+  */
+
   SIRD& operator = (const SIRD& source);
-  {
-    //todo later
-  }
-
-
-
-  {
     
-  }*/
 };
 
-#include "SIRD.hpp"
+#include "SIRD.cpp"
 
 /*
 You will be also responsible for implementing the forward/explicit Euler method for ordinary differential equations.

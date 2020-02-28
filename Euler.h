@@ -21,22 +21,55 @@ private:
   function <T(T)> ODE;
 public:
 
-  Euler() = default; // constructor
+  Euler() = default;
+
+  /*!
+  * @brief
+  * @param[in]
+  * @pre
+  * @post
+  * @throw 
+  */
   Euler(const std::function<T(T)>& callback_f,const T initial_y0,const double input_h = 0.01f); // constructor
 
+  /*!
+  * @brief
+  * @param[in]
+  * @pre
+  * @post
+  * @throw
+  */
   Euler(const Euler<T>& otherEuler);
   
-  /*
+  /*  
   * @brief calls ()(double_input) with var h as step size
+  * @param[in]
+  * @pre
+  * @post
+  * @throw 
   */
+
   T operator()();
+
+   /*!
+  * @brief
+  * @param[in]
+  * @pre
+  * @post
+  * @throw
+  */
 
   T operator()(double input_step);
 
-
+  /*!
+  * @brief
+  * @param[in]
+  * @pre
+  * @post
+  * @throw
+  */
   Euler<T>& operator = (const Euler<T>& source);
 
-  //~Euler() = default;
 
 };
 

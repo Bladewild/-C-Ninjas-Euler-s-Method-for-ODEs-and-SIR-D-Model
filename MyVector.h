@@ -14,42 +14,12 @@ using std::ostream;
 using std::cout;
 using std::istream;
 
-template<typename T>
-class vector;
 /*
-template<typename T>
-class Iter
-{
-public:
-  Iter(const vector<T>* p_vec, int pos)
-    : _pos(pos)
-    , _p_vec(p_vec)
-  { }
-
-  // these three methods form the basis of an iterator for use with
-  // a range-based for loop
-  bool operator!= (const Iter& other) const
-  {
-    return _pos != other._pos;
-  }
-
-  // this method must be defined after the definition of vector<T>
-  // since it needs to use it
-  int operator* () const;
-
-  const Iter& operator++ ()
-  {
-    ++_pos;
-    // although not strictly necessary for a range-based for loop
-    // following the normal convention of returning a value from
-    // operator++ is a good idea.
-    return *this;
-  }
-
-private:
-  int _pos;
-  const vector<T>* _p_vec;
-};
+  Do not attempt to do operations on a empty vector. 
+  This can be made either through input_size=0 or
+  default constructor.
+  Resizing the array bigger than current_size can lead to empty
+  elements. Do not attempt to read these empty positions. only write.
 */
 template<typename T>
 class vector
@@ -70,44 +40,53 @@ private:
 
 
   /*!
-  * @brief  
-  * @param[in] 
-  * @pre  
-  * @post
-  * @throw
+  * @brief Does operations for two T types
+  * @param[in] left T type
+  * @param[in] right T type
+  * @param[in] symbol char arithmetic sign
+  * @pre T = T (assingment) must be defined.
+  * @pre T + T (assingment) must be defined.
+  * @pre T - T (assingment) must be defined.
+  * @pre T * T (assingment) must be defined.
+  * @post return result of type T of the left
+  * @post and right arithmetic results
+  * @throw invalid_argument if symbol not supported
   */
 
   static T handleMath(char symbol,T left, T right);
 
   /*!
-  * @brief  
-  * @param[in] 
-  * @param[out] 
-  * @pre  
-  * @post
-  * @throw
+  * @brief Creates a vector with two arrays passed
+  * @briefand specified operation
+  * @param[in] lhsarr left array
+  * @param[in] rhsarr right array
+  * @param[in] symbol operation to use
+  * @param[in] leftsize integer size
+  * @param[in] rightsize integer size
+  * @pre array sizes are equal
+  * @pre arrays passed must have have no null elements
+  * @pre T = T (assingment) must be defined.
+  * @post returns new vector with combination of
+  * @post two arrays with specified operation
+  * @throw invalid_argument if array sizes are unequal
   */
 
   static vector<T> operatorhandler(const T lhsarr[], 
-  const T rhsarr[], char& symbol,const int leftsize,const int rightsize);
+  const T rhsarr[], const char& symbol,
+  const int leftsize,const int rightsize);
+
+  //PUBLIC------------------------------
 public: 
-
-  string name="default";       // size of this myvec
-  /*!
-  * @brief Default Constructor, runs init(0)
-  * @post create empty vector of size 0
-  */
-
-  vector(); 
 
   /*!
   * @brief Constructs vector of specificied size
+  * @brief  defaults to 0 size if input not passed
   * @param[in] size of int
   * @pre size cannot be negative
   * @post creates vector of specified size
   */
 
-  explicit vector(int size); // constructor
+  explicit vector(int size=0);
 
   /*!
   * @brief  makes a new vector from given array
@@ -125,7 +104,8 @@ public:
   /*!
   * @brief creates vector from initializer list
   * @param[in]  initializer_list<T>
-  * @post copies elements from init_list to index in order
+  * @pre  T = T (assignment) must be defined
+  * @post copies elements from init_list to arr in order
   */
 
   vector(std::initializer_list<T> l);
@@ -146,15 +126,24 @@ public:
 
   int size() const;
   /*!
-* @brief  checks if empty
-* @post return bool of (current_size <= 0) ? true : false;
-*/
+  * @brief  checks if empty
+  * @post return bool of (current_size <= 0) ? true : false;
+  */
   bool empty() const;
+
+  /*!
+  * @brief resizes vector
+  * @param[in] new_size integer
+  * @pre new_size non negative
+  * @post creates new vector size given
+  * @throw invalid_argument if negative new_size
+  */
+
+  void resize(const int new_size);
   
   /*!
   * @brief  complements vector
-  * @param[in]  otherVector
-  * @pre  otherVector must have pass init() preconditions
+  * @pre arr must have no null elements
   * @post copies contents of otherVector to *this vector
   */
 
@@ -167,7 +156,7 @@ public:
   * @pre  finput stream contents must be getline compatible
   * @pre  contents must be white space delimited, all in oneline
   * @post creates vector contents from input stream given
-  * @post modifies Obj vector
+  * @post modifies Obj vector with finput contents
   * @post returns finput
   */
 
@@ -175,11 +164,12 @@ public:
   friend istream& operator >> (istream& finput, vector<U>& Obj);
 
   /*!
-  * @brief
-  * @param[in]
-  * @pre
-  * @post
-  * @throw
+  * @brief prints contents from Arr
+  * @param[in] os ostream
+  * @param[in] Obj Object called
+  * @pre << T (insertion) defined
+  * @post prints each element of arr
+  * @post seperated by " "
   */
 
   template<typename U>
@@ -188,15 +178,35 @@ public:
   /*!
   * @brief
   * @param[in]
-  * @pre
-  * @post
-  * @throw
+  * @pre if arr has null elements, f callback must allow null
+  * @pre elements
+  * @pre resizing bigger can empty elements that can lead to throws
+  * @post function calls each element and stores them into new vector
+  * @post return new vector
   */
 
   vector<T> apply(std::function<T(T)> & f);
 
+  /*!
+  * @brief adds two vectors
+  * @param[in] lhs vector
+  * @param[in] rhs vector
+  * @pre must pass operatorhandler() preconditions
+  * @post returns result of vector addition
+  */
+
   template<typename U>
   friend vector<U> operator+(const vector<U>& lhs, const vector<U>& rhs);
+
+
+  /*!
+  * @brief 
+  * @param[in] lhs vector
+  * @param[in] rhs vector
+  * @pre must pass operatorhandler() preconditions
+  * @post returns result of vector subtraction
+  */
+
   template<typename U>
   friend vector<U> operator-(const vector<U>& lhs, const vector<U>& rhs);
 
@@ -204,9 +214,11 @@ public:
   * @brief  returns value of element at position
   * @param[in]  index_var index position to access
   * @pre index_var must be bounded,non negative
+  * @pre resizing bigger can make empty elements giving garbage
   * @post returns value to element at given index_var
   * @throw range_error if out of bounds
   * @throw range_error vector is empty
+  * @note empty elements can occur resulting in accessing garbage
   */
 
   const T  operator [] (const int index_var) const;
@@ -215,15 +227,15 @@ public:
   * @brief  returns reference of element at position
   * @param[in]  index_var index position to access  
   * @pre index_var must be bounded,non negative
+  * @pre resizing bigger can make empty elements giving garbage
   * @post returns reference to element at given index_var
   * @throw range_error if out of bounds
   * @throw range_error vector is empty
+  * @note empty elements can occur resulting int accessing garbage
   */
 
   T & operator [] (const int index_var);
 
-
-  //dot operator
 
   /*!
   * @brief  Dot operator
@@ -241,81 +253,66 @@ public:
 
   
   /*!
-  * @brief 
-  * @param[in] 
-  * @param[in] 
-  * @pre 
-  * @post 
-  * @throw 
+  * @brief multiple vector by scalar multiple
+  * @param[in] lhsScalar multiply by
+  * @param[in] rhs vector to be multiplied
+  * @pre rhs size > 0
+  * @pre vector passed must have have no null elements
+  * @post mutiplies each element of vector by lhsScalar
+  * @post returns resulting vector
+  * @throw invalid_argument vector size < 0
   */
 
   template<typename U>
   friend vector<U> operator*(const U & lhsScalar, const vector<U>& rhs);
 
   /*!
-  * @brief 
-  * @param[in] 
-  * @param[in] 
-  * @pre 
-  * @post 
-  * @throw 
+  * @brief multiple vector by scalar multiple
+  * @param[in] rhsScalar multiply by
+  * @param[in] lhs vector to be multiplied
+  * @pre rhs size > 0
+  * @pre vector passed must have have no null elements
+  * @post mutiplies each element of vector by rhsScalar
+  * @post returns resulting vector
+  * @throw invalid_argument vector size < 0
   */
 
   template<typename U>
   friend vector<U> operator*(const vector<U>& lhs, const U& rhsScalar);
 
-  
+  /*!
+  * @brief assigns source to this vector (by value)
+  * @param[in] source vector<T>
+  * @post copies contents from source to *this vector
+  */
 
   vector<T>& operator = (const vector<T>& source);
 
+  /*!
+  * @brief cleans pointers
+  * @post deletes [] arr if not NULL
+  */
 
   ~vector();
 
-  void resize(const int new_size);
-  //T get(int i) const;
+  /*!
+  * @brief begin pointer
+  * @post returns reference to first element of arr
+  * @post returns nullptr if size < 0
+  */
 
   T* begin() const;
-
+  /*!
+  * @brief end pointer
+  * @post returns reference to last element of arr
+  * @post returns nullptr if size < 0
+  */
   T* end() const;
-
-  //operator*() const;
-
-  //Iter<T> begin() const;
-
-  //Iter<T> end() const;
 };
-/*
-template<typename T>
-int Iter<T>::operator* () const
-{
-  return _p_vec->get(_pos);
-  
-}*/
-
 
 
 
 #include "MyVector.hpp"
 
-/*
-http://antonym.org/2014/02/c-plus-plus-11-range-based-for-loops.html
-  */
-  /*
-  destructor
-copy constructor
-copy assignment operator
-
-A parameterized constructor accepting a 1-dimensional std::initializer_list //done
-A parameterized constructor accepting the size of the vector to create //done
-Other appropriate constructors
-A means of resizing and determining the size of the vector with resize and size functions //done
-Appropriate functions such that range-based for loops can be used on your vector//in dev
-Copy constructor/copy assignment operations //done
-Element access with the [] operator
-Addition, subtraction, scalar multiplication, and vector multiplication (dot product) //done
-Unary minus //done
-An apply function accepting a function and returning a new vector containing the result of the function when called on the elements of the calling object, and in which the function f must have the signature T f(T) (for template type T)
-Stream operators for input/output of vector data - accepted input should be whitespace-delimited elements, and output should be single-space-delimited elements of the vector
-*/
 
 #endif

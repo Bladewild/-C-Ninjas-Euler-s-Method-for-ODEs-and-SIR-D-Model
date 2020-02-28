@@ -65,6 +65,12 @@ int main()
     }
 
     fout.close();
+    /*
+    vector<int> one = {1,2,3,4,5 };
+    vector<int> two = { 2,2,2,2,2 };
+    vector<int> three = one * 3;
+    cout << three << endl;*/
+
     cout << "\ndone"<<std::endl;
 
   }
@@ -76,6 +82,9 @@ int main()
   }
   catch (const std::length_error & le) {
     std::cerr << "Length error: " << le.what() << '\n';
+  }
+  catch (const std::domain_error & de) {
+    std::cerr << "Domain error: " << de.what() << '\n';
   }
   catch (...)
   {
@@ -217,9 +226,9 @@ void Test2()
   vector<int> vTest = { 1,2,3,4,5,6,7,1,1,1 };
   cout << vTest << endl;
   cout << "isEmpty? " << vTest.empty() << endl;
-  vector<int> vTest2 = {};
-  cout << vTest2 << endl;
-  cout << "isEmpty? " << vTest2.empty() << endl;
+  //vector<int> vTest2 = { };
+ // cout << vTest2 << endl;
+  //cout << "isEmpty? " << vTest2.empty() << endl;
   cout << "------- END----" << endl;
   vector<int> vTest3 = vector<int>();
   vector<int> vTest4;
